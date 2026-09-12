@@ -1,7 +1,7 @@
 (() => {
-  const section = document.createElement('section'); section.className='card';
-  section.innerHTML='<h2>Student submissions</h2><p>Submitted explanations and formative feedback from this classroom.</p><label>Task <select aria-label="Filter student submissions by task"></select></label> <button type="button" class="outline">Refresh submissions</button><p role="status"></p><div class="submission-list"></div>';
-  document.querySelector('#assignments-view').prepend(section);
+  const section = document.createElement('section'); section.id='submissions-view'; section.hidden=true;
+  section.innerHTML='<div class="top"><div><h1>Student submissions</h1><p class="subtitle">Review submitted explanations and feedback from your students.</p></div></div><div class="card"><label>Task <select aria-label="Filter student submissions by task"></select></label> <button type="button" class="outline">Refresh submissions</button><p role="status"></p><div class="submission-list"></div></div>';
+  document.querySelector('#assignments-view').after(section);
   const select=section.querySelector('select'), status=section.querySelector('[role="status"]'), list=section.querySelector('.submission-list');
   let rows=[], busy=false, snapshot='';
   const node=(tag,text)=>{const el=document.createElement(tag);el.textContent=text;return el;};

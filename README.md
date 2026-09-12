@@ -98,14 +98,14 @@ This is an early hackathon prototype. The visual dashboard and interactions demo
 
 ## Publishing teacher assignments
 
-Teachers can create a question and one knowledge point per line, then select **Publish oral task**. Published assignments appear in the teacher assignment list and the student task list. Student pages poll `/api/tasks` every five seconds and refresh on focus without replacing an active answer. All demo students connected to the same server receive these assignments.
+Teachers can create a question and one knowledge point per line, then select **Publish oral task**. All saved assignments appear once in the teacher **Oral tasks** grid and in the student task list. Student pages poll `/api/tasks` every five seconds and refresh on focus without replacing an active answer. All demo students connected to the same server receive these assignments.
 
 Tasks persist in `data/tasks.json` (ignored by Git). Keep this directory when restarting or redeploying the server. GET/POST `/api/tasks` provide the shared task store; invalid or empty tasks are rejected. This remains a demo API without server-side user authentication or class-specific assignment permissions. Student submission synchronization is described below.
 
 
 ## Student submissions → teacher
 
-Click **Submit explanation** in the student workspace. Submitted attempts upload automatically to the same Node server; drafts remain in browser storage (and the optional student cloud store). Open **My assignments → Student submissions** as the teacher to see answers, timestamps, each attempt, idea coverage, and feedback. Filter by task or refresh manually; the list also polls every five seconds and preserves expanded answers.
+Click **Submit explanation** in the student workspace. Submitted attempts upload automatically to the same Node server; drafts remain in browser storage (and the optional student cloud store). Open **Student submissions** as the teacher to see answers, timestamps, each attempt, idea coverage, and feedback. Filter by task or refresh manually; the list also polls every five seconds and preserves expanded answers.
 
 - The server saves submissions in `data/submissions.json` using atomic file replacement. Preserve `data/` across server restarts and deployments. This file store supports one Node server process.
 - Attempts use stable IDs for idempotent retry. Feedback updates a pending attempt without creating a duplicate; a late pending request cannot overwrite completed feedback.
