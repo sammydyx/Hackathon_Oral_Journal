@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oral Journal · Student</title>
+  <style>
+    :root{--navy:#183248;--ink:#18242c;--muted:#68747c;--paper:#f7f8f6;--line:#e7eaec;--mint:#eaf5ef;--mintInk:#237050;--amber:#fff3d9;--amberInk:#946716;--red:#ad5655;--redBg:#fbeeee;--teal:#1e7d72}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+    .app{min-height:100vh;display:grid;grid-template-columns:248px 1fr}
+    aside{background:var(--navy);padding:28px 16px;color:#fff;display:flex;flex-direction:column}.brand{font-weight:800;font-size:18px;padding:0 10px}.brand span{display:block;color:#aec2cf;font-size:10px;letter-spacing:1px;margin-top:4px}
+    nav{display:grid;gap:5px;margin-top:36px}.nav{background:transparent;border:0;border-radius:9px;color:#bbcad4;padding:11px 12px;text-align:left;font:inherit;cursor:pointer}.nav.active{background:#ffffff1e;color:#fff}
+    .profile{margin-top:auto;border-top:1px solid #ffffff2e;padding:16px 10px 0;font-size:13px;color:#dce9ef}.profile small{color:#aec2cf}.profile input{width:100%;margin-top:6px;padding:7px 9px;border-radius:7px;border:1px solid #ffffff3a;background:#ffffff14;color:#fff;font:inherit;font-size:13px}
+    main{max-width:1100px;width:100%;margin:auto;padding:38px 48px}
+    h1{font-size:30px;letter-spacing:-1px;margin:0}.subtitle,.desc{color:var(--muted);font-size:13px}.subtitle{margin:8px 0}
+    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:19px;box-shadow:0 2px 6px #182a3408;margin-top:18px}
+    .grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:18px;margin-top:18px}.grid .card{margin-top:0}
+    .heading{display:flex;justify-content:space-between;align-items:center;gap:10px}.heading h2{font-size:17px;margin:0}
+    .question{font-size:20px;font-weight:800;margin:6px 0 4px}.step{display:inline-block;background:#e8f1f8;color:#2b668d;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:800;letter-spacing:.5px}
+    .points{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}.point{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:13px;transition:background .3s}
+    .lamp{width:14px;height:14px;border-radius:50%;background:#dfe4e8;flex:none;margin-top:2px;box-shadow:inset 0 0 0 2px #fff}.point.on{background:var(--mint);border-color:#cfe6d8}.point.on .lamp{background:#3aa374;box-shadow:0 0 0 3px #3aa37433}.point.warn{background:var(--redBg);border-color:#efd3d3}.point.warn .lamp{background:var(--red)}.point.focus{border:2px solid #e2b454;background:#fffaf0}
+    .point b{display:block}.point small{color:var(--muted)}
+    textarea{width:100%;min-height:150px;padding:12px;border:1px solid #ccd4d9;border-radius:10px;font:inherit;font-size:14px;line-height:1.5;resize:vertical;background:#fbfcfb;color:var(--ink)}textarea:focus{outline:none}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    .primary{background:var(--teal);color:#fff;border:0;border-radius:9px;padding:11px 16px;font:inherit;font-weight:750;cursor:pointer}.primary:disabled{opacity:.5;cursor:default}
+    .ghost{background:#fff;border:1px solid #ccd4d9;border-radius:9px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer;color:#2b3a45}.ghost.rec{border-color:var(--red);color:var(--red)}
+    .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--red);margin-right:6px;animation:blink 1s infinite}@keyframes blink{50%{opacity:.2}}
+    .status{font-size:12px;color:var(--muted)}.mode{font-size:11px;font-weight:800;padding:4px 8px;border-radius:20px;background:var(--amber);color:var(--amberInk)}.mode.ai{background:var(--mint);color:var(--mintInk)}
+    .list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}.item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.5}.item.good{background:var(--mint)}.item.miss{background:var(--amber)}.item.bad{background:var(--redBg)}.item.kept{background:#f1f4f2;color:#4a5a63}
+    .item q{display:block;color:#3d4a53;font-style:italic;margin-top:3px}.item .fix{margin-top:6px;color:#5a3a3a}.hintBtn{border:0;background:#fff8;border-radius:6px;padding:4px 8px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;margin-top:6px;color:#6a4d12}
+    .prompt{border-left:4px solid #e2b454;background:#fffaf0;padding:14px 16px;border-radius:10px;margin-top:14px}.prompt h3{margin:0 0 6px;font-size:14px}.prompt p{margin:0;font-size:13px;color:#6a5730;line-height:1.55}
+    table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}th{text-align:left;color:var(--muted);font-size:11px;padding:8px;border-bottom:1px solid var(--line)}td{padding:10px 8px;border-bottom:1px solid #f0f1f2;vertical-align:top}
+    .pill{display:inline-block;padding:3px 8px;border-radius:20px;font-weight:750;font-size:11px}.stable{background:var(--mint);color:var(--mintInk)}.review{background:var(--amber);color:var(--amberInk)}.err{background:var(--redBg);color:var(--red)}.neutral{background:#eef1f3;color:#50616e}
+    .journal{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}.journal:last-child{border:0}.journal small{display:block;color:var(--muted)}
+    .hidden{display:none}.note{font-size:11px;color:var(--muted);margin-top:8px}
+    .tasks{display:grid;gap:14px;margin-top:18px}.taskCard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 19px;box-shadow:0 2px 6px #182a3408;display:flex;gap:14px;align-items:center;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}.taskCard:hover{border-color:#b9cbd6}
+    .taskIcon{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:#e8f1f8;color:#2b668d;font-size:21px;flex:none}.taskCard h2{margin:0 0 4px;font-size:15px}.taskCard p{margin:0;color:var(--muted);font-size:12px}.taskCard .right{margin-left:auto;text-align:right;flex:none}.taskCard .arrow{color:#a2b0ba;font-size:18px;margin-left:12px}
+    .back{border:0;background:transparent;color:#236d91;font:inherit;font-weight:750;padding:0;cursor:pointer;margin-bottom:10px}
+    @media(max-width:900px){.app{grid-template-columns:1fr}aside{padding:18px 16px}nav,.profile{display:none}main{padding:22px 16px}.grid{grid-template-columns:1fr}h1{font-size:24px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside><div class="brand">◉ Oral Journal<span>STUDENT SPACE</span></div>
+    <nav><button class="nav active" id="navTasks">◫　My tasks</button><button class="nav" id="navJournal">▤　My journal</button></nav>
+    <div class="profile">Your name<input id="name" placeholder="e.g. Amy" /><small>Used only to label your journal on this device.</small></div>
+  </aside>
+  <main>
+
+    <!-- ================= VIEW 1: TASK LIST ================= -->
+    <section id="viewTasks">
+      <h1>My oral tasks</h1>
+      <p class="subtitle" id="taskCount"></p>
+      <div class="tasks" id="taskList"></div>
+      <section class="card" id="journalCard">
+        <div class="heading"><h2>My journal</h2><span class="status">saved on this device only</span></div>
+        <div id="journalList"><p class="desc">No entries yet. Your saved explanations will appear here.</p></div>
+      </section>
+    </section>
+
+    <!-- ================= VIEW 2: ONE TASK ================= -->
+    <section id="viewTask" class="hidden">
+      <button class="back" id="backBtn">← All tasks</button>
+      <h1 id="taskTitle"></h1>
+      <p class="subtitle">Say what you understand. Then see which ideas came through, and fill in the gaps.</p>
+
+      <section class="card">
+        <div class="heading"><span class="step" id="stepTag">ATTEMPT 1 · FIRST EXPLANATION</span><span class="status" id="aiStatus">checking analysis service…</span></div>
+        <div class="question" id="question"></div>
+        <p class="desc" id="taskHint">Try to cover every idea on the checklist. You do not need to use the exact words.</p>
+        <ul class="points" id="points"></ul>
+      </section>
+
+      <div class="grid">
+        <section class="card">
+          <div class="heading"><h2 id="attemptTitle">Your explanation</h2><span class="status" id="recStatus"></span></div>
+          <p class="desc" id="attemptDesc">Press record and talk. Stop when you are done, then check your explanation.</p>
+          <textarea id="transcript" readonly placeholder="Press Record and start talking. Your words will appear here."></textarea>
+          <div class="row">
+            <button class="ghost" id="recBtn">🎙 Record</button>
+            <select id="lang" class="ghost" title="Speech recognition language"><option value="en-US">English</option><option value="zh-CN">中文</option></select>
+            <button class="primary" id="analyzeBtn">Check my explanation</button>
+            <button class="ghost hidden" id="againBtn">Fill the gaps →</button>
+            <button class="primary hidden" id="saveBtn">Save to my journal</button>
+          </div>
+          <p class="note" id="speechNote"></p>
+        </section>
+
+        <section class="card" id="resultCard">
+          <div class="heading"><h2>What came through</h2><span class="mode hidden" id="modeTag"></span></div>
+          <p class="desc" id="resultEmpty">Your checklist will light up here after you submit.</p>
+          <div id="results" class="hidden">
+            <div id="feedback" class="desc" style="color:var(--ink);font-size:13.5px;line-height:1.55"></div>
+            <ul class="list" id="mentioned"></ul>
+            <ul class="list" id="missing"></ul>
+            <ul class="list" id="misconceptions"></ul>
+            <div class="prompt hidden" id="followUp"><h3>For your next explanation</h3><p id="followUpText"></p></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="card hidden" id="progressCard">
+        <div class="heading"><h2>Your progress on this task</h2><span class="pill stable" id="progressPill"></span></div>
+        <p class="desc">Compared by knowledge point. Ideas you expressed in attempt 1 carry over; attempt 2 only had to fill the gaps.</p>
+        <table><thead><tr><th>Knowledge point</th><th>Attempt 1</th><th>After attempt 2</th><th>What changed</th></tr></thead><tbody id="progressBody"></tbody></table>
+      </section>
+    </section>
+  </main>
+</div>
+
+<script>
+// ---------- Tasks (shared contract with the teacher page) ----------
+// The teacher page can write an array of tasks with this shape to localStorage["oj_tasks"].
+const DEMO_TASKS = [
+  { id: "fractions-1", subject: "Grade 5 Mathematics", icon: "⅔", title: "Comparing fractions", question: "Why is 3/4 greater than 2/3?", due: "Tomorrow, 5:00 PM",
+    knowledgePoints: [
+      { id: "same-whole", name: "The same whole", criteria: "Says the two fractions must refer to the same whole (same-sized pizza, same bar) to be compared.", misconception: "Comparing parts of differently sized wholes." },
+      { id: "num-den", name: "Meaning of numerator and denominator", criteria: "Explains that the denominator tells how many equal parts the whole is cut into and the numerator how many parts are taken.", misconception: "A larger denominator means a larger fraction." },
+      { id: "common-den", name: "Finding common denominators", criteria: "Rewrites both fractions with a common denominator (e.g. 9/12 and 8/12) or uses another valid comparison method.", misconception: "Rewriting only one fraction." },
+      { id: "conclusion", name: "Conclusion and reasoning", criteria: "States that 3/4 is greater and gives a reason, not only the answer.", misconception: "Giving an answer without explaining why." }
+    ] },
+  { id: "photosynthesis-1", subject: "Grade 5 Science", icon: "🌱", title: "How plants make food", question: "How does a plant make its own food?", due: "Friday, 5:00 PM",
+    knowledgePoints: [
+      { id: "inputs", name: "What the plant takes in", criteria: "Names sunlight, water, and carbon dioxide (air) as what the plant needs.", misconception: "Plants get their food from the soil." },
+      { id: "where", name: "Where it happens", criteria: "Says it happens in the leaves (green parts / chlorophyll).", misconception: "It happens in the roots." },
+      { id: "outputs", name: "What the plant makes", criteria: "Says the plant makes sugar (food) and gives off oxygen.", misconception: "Plants breathe in oxygen like animals." },
+      { id: "why-light", name: "Why light matters", criteria: "Explains that light is the energy source; without light the plant cannot make food.", misconception: "Light is only needed to keep the plant warm." }
+    ] },
+  { id: "water-cycle-1", subject: "Grade 5 Science", icon: "💧", title: "The water cycle", question: "How does water travel from the sea to the rain?", due: "Next Monday",
+    knowledgePoints: [
+      { id: "evap", name: "Evaporation", criteria: "Says the sun heats water so it turns into water vapor and rises.", misconception: "Water disappears when it dries." },
+      { id: "cond", name: "Condensation", criteria: "Says the vapor cools high up and turns back into tiny droplets that form clouds.", misconception: "Clouds are made of smoke or steam." },
+      { id: "precip", name: "Precipitation", criteria: "Says the droplets join, get heavy, and fall as rain or snow.", misconception: "Rain comes from holes in the clouds." },
+      { id: "cycle", name: "It is a cycle", criteria: "Says the water returns to rivers, lakes, or the sea and the process repeats.", misconception: "Rain is new water each time." }
+    ] }
+];
+let tasks = DEMO_TASKS;
+try {
+  const arr = JSON.parse(localStorage.getItem("oj_tasks"));
+  if (Array.isArray(arr) && arr.length && arr.every(t => t.knowledgePoints?.length)) tasks = arr;
+  else { const one = JSON.parse(localStorage.getItem("oj_task")); if (one && one.knowledgePoints?.length) tasks = [one, ...DEMO_TASKS.filter(d => d.id !== one.id)]; }
+} catch {}
+
+// ---------- State ----------
+let task = null, pointById = {}, attempt = 1, attempts = [], focusIds = [], aiAvailable = false;
+const $ = id => document.getElementById(id);
+function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function loadJournals(){ try { return JSON.parse(localStorage.getItem("oj_journals")) || []; } catch { return []; } }
+
+// ---------- Analysis service ----------
+fetch("/api/health").then(r => r.json()).then(h => { aiAvailable = !!h.ai; $("aiStatus").textContent = aiAvailable ? "AI analysis ready" : "AI not configured · offline keyword mode"; })
+  .catch(() => { $("aiStatus").textContent = "No server · offline keyword mode"; });
+
+async function analyzeTranscript(transcript, points, previousTranscript, followUp) {
+  const scoped = { ...task, knowledgePoints: points };
+  if (aiAvailable) {
+    const r = await fetch("/api/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ task: scoped, transcript, previousTranscript, followUp }) });
+    if (r.ok) return { ...(await r.json()), mode: "ai" };
+    const err = await r.json().catch(() => ({}));
+    console.warn("AI analysis failed, falling back:", err.error);
+  }
+  return { ...offlineAnalyze(transcript, points), mode: "offline" };
+}
+function snippet(text, i) { let s = Math.max(0, i - 40), e = Math.min(text.length, i + 60); if (s > 0) s = text.indexOf(" ", s) + 1; if (e < text.length) e = text.lastIndexOf(" ", e); return (s > 0 ? "…" : "") + text.slice(s, e).trim() + (e < text.length ? "…" : ""); }
+// Offline fallback: crude keyword overlap. Clearly labeled in the UI; never presented as AI.
+function offlineAnalyze(text, points) {
+  const t = text.toLowerCase(); const words = new Set(t.split(/[^a-z0-9/]+/).filter(w => w.length > 2));
+  const out = { mentioned: [], missing: [], misconceptions: [], feedback: "", followUpPrompt: "", confidence: "low" };
+  const stop = ["that","with","same","tells","many","says","both","only","gives","into","parts","part","fraction","fractions","must","refer","equal","valid","other","method","another","reason","answer","states","names","plant","water","explains"];
+  for (const p of points) {
+    const keys = (p.name + " " + p.criteria).toLowerCase().split(/[^a-z0-9/]+/).filter(w => w.length > 3 && !stop.includes(w));
+    const hit = keys.filter(k => words.has(k));
+    if (hit.length >= 2) { const i = t.indexOf(hit[0]); out.mentioned.push({ pointId: p.id, quote: snippet(text, i) }); }
+    else out.missing.push({ pointId: p.id, hint: "Can you say something about: " + p.name.toLowerCase() + "?" });
+  }
+  out.feedback = "Offline check only: this looked for key words, not for understanding. Ask your teacher to enable AI analysis for real feedback.";
+  out.followUpPrompt = out.missing.length ? out.missing[0].hint : "Try explaining it to a younger student.";
+  return out;
+}
+
+// ---------- View 1: task list ----------
+function taskStatus(t) {
+  const j = loadJournals().find(e => e.taskId === t.id);
+  if (!j) return { label: "Not started", cls: "neutral" };
+  const n = t.knowledgePoints.length, last = j.attempts[j.attempts.length - 1];
+  const got = (last.combined || last.analysis).mentioned.length;
+  return { label: `Done · ${got}/${n} ideas`, cls: got === n ? "stable" : "review" };
+}
+function renderTaskList() {
+  $("taskCount").textContent = `${tasks.length} task${tasks.length === 1 ? "" : "s"} from your teacher. Pick one to start.`;
+  $("taskList").innerHTML = tasks.map(t => { const s = taskStatus(t);
+    return `<button class="taskCard" data-id="${esc(t.id)}"><div class="taskIcon">${esc(t.icon || "◌")}</div><div><h2>${esc(t.title)}</h2><p>${esc(t.subject || "")}${t.due ? " · Due " + esc(t.due) : ""} · ${t.knowledgePoints.length} ideas to cover</p></div><div class="right"><span class="pill ${s.cls}">${esc(s.label)}</span><span class="arrow">→</span></div></button>`; }).join("");
+  document.querySelectorAll(".taskCard").forEach(b => b.onclick = () => openTask(b.dataset.id));
+  renderJournals();
+}
+function showView(name) {
+  $("viewTasks").classList.toggle("hidden", name !== "tasks"); $("viewTask").classList.toggle("hidden", name !== "task");
+  $("navTasks").classList.toggle("active", name === "tasks"); $("navJournal").classList.toggle("active", false);
+  window.scrollTo({ top: 0 });
+}
+$("navTasks").onclick = () => { renderTaskList(); showView("tasks"); };
+$("backBtn").onclick = () => { if (recording) rec.stop(); renderTaskList(); showView("tasks"); };
+$("navJournal").onclick = () => { renderTaskList(); showView("tasks"); $("journalCard").scrollIntoView({ behavior: "smooth" }); };
+
+// ---------- View 2: one task ----------
+function openTask(id) {
+  task = tasks.find(t => t.id === id); if (!task) return;
+  pointById = Object.fromEntries(task.knowledgePoints.map(p => [p.id, p]));
+  attempt = 1; attempts = []; focusIds = [];
+  $("taskTitle").textContent = task.title; $("question").textContent = task.question;
+  $("stepTag").textContent = "ATTEMPT 1 · FIRST EXPLANATION"; $("attemptTitle").textContent = "Your explanation";
+  $("attemptDesc").textContent = "Press record and talk. Stop when you are done, then check your explanation.";
+  $("taskHint").textContent = "Try to cover every idea on the checklist. You do not need to use the exact words.";
+  $("points").innerHTML = task.knowledgePoints.map(p => `<li class="point" id="pt-${p.id}"><span class="lamp"></span><span><b>${esc(p.name)}</b><small id="ptnote-${p.id}"></small></span></li>`).join("");
+  $("transcript").value = ""; $("recStatus").textContent = "";
+  $("resultEmpty").classList.remove("hidden"); $("results").classList.add("hidden"); $("modeTag").classList.add("hidden");
+  $("progressCard").classList.add("hidden"); $("againBtn").classList.add("hidden"); $("saveBtn").classList.add("hidden");
+  $("saveBtn").textContent = "Save to my journal"; $("saveBtn").disabled = false;
+  showView("task");
+}
+
+// ---------- Speech recognition ----------
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition; let rec = null, recording = false, baseText = "";
+if (!SR) { $("speechNote").textContent = "Voice recording needs Chrome or Edge on this device."; $("recBtn").disabled = true; }
+$("recBtn").onclick = () => {
+  if (recording) { rec.stop(); return; }
+  rec = new SR(); rec.lang = $("lang").value; rec.continuous = true; rec.interimResults = true;
+  baseText = $("transcript").value.trim(); let finalText = "";
+  rec.onresult = e => { let interim = ""; finalText = "";
+    for (let i = 0; i < e.results.length; i++) { const s = e.results[i][0].transcript; if (e.results[i].isFinal) finalText += s + " "; else interim += s; }
+    $("transcript").value = (baseText ? baseText + " " : "") + finalText + interim; };
+  rec.onerror = e => { $("recStatus").textContent = "Mic error: " + e.error; stopUI(); };
+  rec.onend = stopUI;
+  rec.start(); recording = true; $("recBtn").innerHTML = '<span class="dot"></span>Stop'; $("recBtn").classList.add("rec"); $("recStatus").textContent = "Listening… speak naturally";
+};
+function stopUI(){ recording = false; $("recBtn").textContent = "🎙 Record"; $("recBtn").classList.remove("rec"); $("recStatus").textContent = ""; }
+
+// ---------- Submit ----------
+$("analyzeBtn").onclick = async () => {
+  const text = $("transcript").value.trim();
+  if (text.length < 15) { $("recStatus").textContent = "Say a little more first, then stop recording."; return; }
+  if (recording) rec.stop();
+  $("analyzeBtn").disabled = true; $("analyzeBtn").textContent = "Listening for your ideas…";
+  try {
+    if (attempt === 1) {
+      const analysis = await analyzeTranscript(text, task.knowledgePoints, null, false);
+      dedupe(analysis);
+      attempts.push({ n: 1, transcript: text, analysis, at: new Date().toISOString() });
+      renderAnalysis(analysis, null);
+      focusIds = [...new Set([...analysis.missing.map(m => m.pointId), ...analysis.misconceptions.map(m => m.pointId)])];
+      if (focusIds.length) $("againBtn").classList.remove("hidden");
+      else { $("attemptDesc").textContent = "Every idea came through on the first try. You can save this to your journal."; $("saveBtn").classList.remove("hidden"); }
+    } else {
+      // Attempt 2: judge ONLY the gap points. Ideas from attempt 1 carry over untouched.
+      const focusPoints = focusIds.map(id => pointById[id]);
+      const analysis = await analyzeTranscript(text, focusPoints, attempts[0].transcript, true);
+      dedupe(analysis);
+      const a1 = attempts[0].analysis;
+      const combined = { mentioned: [...a1.mentioned.map(m => ({ ...m, from: 1 })), ...analysis.mentioned.map(m => ({ ...m, from: 2 }))],
+        missing: analysis.missing, misconceptions: analysis.misconceptions, feedback: analysis.feedback, followUpPrompt: analysis.followUpPrompt, confidence: analysis.confidence, mode: analysis.mode };
+      attempts.push({ n: 2, transcript: text, analysis, combined, focusIds, at: new Date().toISOString() });
+      renderAnalysis(combined, a1);
+      renderProgress(a1, combined);
+      $("againBtn").classList.add("hidden"); $("saveBtn").classList.remove("hidden");
+    }
+  } catch (e) { $("recStatus").textContent = "Could not analyze: " + e.message; }
+  $("analyzeBtn").disabled = false; $("analyzeBtn").textContent = "Check my explanation";
+};
+// A point flagged as a misconception is shown once, in the "check this idea" list, not also as expressed.
+function dedupe(a) { const flagged = new Set(a.misconceptions.map(m => m.pointId)); a.mentioned = a.mentioned.filter(m => !flagged.has(m.pointId)); a.missing = a.missing.filter(m => !flagged.has(m.pointId)); const seen = new Set(); a.mentioned = a.mentioned.filter(m => !seen.has(m.pointId) && seen.add(m.pointId)); a.missing = a.missing.filter(m => !seen.has(m.pointId) && seen.add(m.pointId)); }
+
+function renderAnalysis(a, a1) {
+  $("resultEmpty").classList.add("hidden"); $("results").classList.remove("hidden");
+  const tag = $("modeTag"); tag.classList.remove("hidden"); tag.className = "mode " + (a.mode === "ai" ? "ai" : ""); tag.textContent = a.mode === "ai" ? "AI · against teacher's criteria" : "Offline keyword mode · not AI";
+  for (const p of task.knowledgePoints) { const el = $("pt-" + p.id); el.className = "point"; $("ptnote-" + p.id).textContent = ""; }
+  for (const m of a.mentioned) { $("pt-" + m.pointId)?.classList.add("on"); if (m.from === 1) $("ptnote-" + m.pointId).textContent = "from attempt 1"; }
+  for (const m of a.misconceptions) { const el = $("pt-" + m.pointId); if (el) { el.className = "point warn"; $("ptnote-" + m.pointId).textContent = "Check this idea"; } }
+  $("feedback").textContent = a.feedback + (a.confidence === "low" && a.mode === "ai" ? " (The transcript was hard to judge, so your teacher may review this one.)" : "");
+  $("mentioned").innerHTML = a.mentioned.map(m => m.from === 1
+    ? `<li class="item kept">✔ <b>${esc(pointById[m.pointId]?.name)}</b> <span class="status">· kept from attempt 1</span><q>${esc(m.quote)}</q></li>`
+    : `<li class="item good">✔ <b>${esc(pointById[m.pointId]?.name)}</b><q>${esc(m.quote)}</q></li>`).join("");
+  $("missing").innerHTML = a.missing.map((m, i) => `<li class="item miss">○ <b>Not yet: ${esc(pointById[m.pointId]?.name)}</b><div id="hint-${i}" class="hidden"><q>${esc(m.hint)}</q></div><div id="crit-${i}" class="hidden"><q>Teacher's note: ${esc(pointById[m.pointId]?.criteria)}</q></div><button class="hintBtn" data-i="${i}">Give me a hint</button></li>`).join("");
+  $("misconceptions").innerHTML = a.misconceptions.map(m => `<li class="item bad">! <b>Check this idea: ${esc(pointById[m.pointId]?.name)}</b><q>You said: ${esc(m.quote)}</q><div class="fix">${esc(m.correction)}</div></li>`).join("");
+  const showPrompt = !!a.followUpPrompt && (a.missing.length || a.misconceptions.length);
+  $("followUp").classList.toggle("hidden", !showPrompt); $("followUpText").textContent = a.followUpPrompt;
+  // Hint ladder: first a nudge, then the teacher's criteria.
+  document.querySelectorAll(".hintBtn").forEach(b => b.onclick = () => { const i = b.dataset.i; const h = $("hint-" + i), c = $("crit-" + i);
+    if (h.classList.contains("hidden")) { h.classList.remove("hidden"); b.textContent = "Still stuck? Show the teacher's note"; } else { c.classList.remove("hidden"); b.remove(); } });
+}
+
+$("againBtn").onclick = () => {
+  attempt = 2;
+  $("stepTag").textContent = "ATTEMPT 2 · FILL THE GAPS"; $("attemptTitle").textContent = "Fill the gaps";
+  const names = focusIds.map(id => pointById[id]?.name).filter(Boolean);
+  $("attemptDesc").textContent = "Only talk about: " + names.join(", ") + ". The ideas you already expressed are kept, so you do not need to repeat them.";
+  $("taskHint").textContent = "Highlighted ideas are the ones to fill in. Green ones are already done.";
+  for (const id of focusIds) { const el = $("pt-" + id); if (el) { el.classList.add("focus"); $("ptnote-" + id).textContent = el.classList.contains("warn") ? "Explain this one again" : "Add this one"; } }
+  $("transcript").value = ""; $("againBtn").classList.add("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+// ---------- Progress (deterministic diff, no extra AI call) ----------
+function status(a, id) { if (a.misconceptions.some(m => m.pointId === id)) return "misconception"; if (a.mentioned.some(m => m.pointId === id)) return "mentioned"; return "missing"; }
+const LABEL = { mentioned: '<span class="pill stable">Expressed</span>', missing: '<span class="pill review">Not yet</span>', misconception: '<span class="pill err">Check idea</span>' };
+function renderProgress(a1, a2) {
+  let gained = 0;
+  $("progressBody").innerHTML = task.knowledgePoints.map(p => { const s1 = status(a1, p.id), s2 = status(a2, p.id); let change;
+    if (s1 === "mentioned") change = "Kept from attempt 1";
+    else if (s2 === "mentioned") { change = s1 === "misconception" ? "Corrected ✔" : "Added ✔"; gained++; }
+    else if (s2 === "misconception") change = "Still needs a look";
+    else change = "Still missing";
+    const m = a2.mentioned.find(m => m.pointId === p.id); const q = m?.from === 2 ? m.quote : null;
+    return `<tr><td><b>${esc(p.name)}</b></td><td>${LABEL[s1]}</td><td>${LABEL[s2]}</td><td>${change}${q ? `<q style="display:block;color:#68747c;font-style:italic;margin-top:4px">${esc(q)}</q>` : ""}</td></tr>`; }).join("");
+  const n = task.knowledgePoints.length;
+  $("progressPill").textContent = `${a1.mentioned.length}/${n} → ${a2.mentioned.length}/${n} ideas expressed`;
+  $("progressCard").classList.remove("hidden"); $("progressCard").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// ---------- Journal (localStorage; teacher page can aggregate from "oj_journals") ----------
+$("saveBtn").onclick = () => {
+  const j = loadJournals().filter(e => e.taskId !== task.id); const name = $("name").value.trim() || "Anonymous";
+  j.unshift({ id: "j-" + Date.now(), taskId: task.id, taskTitle: task.title, question: task.question, studentName: name, createdAt: new Date().toISOString(), attempts });
+  localStorage.setItem("oj_journals", JSON.stringify(j)); $("saveBtn").textContent = "Saved ✔"; $("saveBtn").disabled = true;
+};
+function renderJournals() {
+  const j = loadJournals(); if (!j.length) { $("journalList").innerHTML = '<p class="desc">No entries yet. Your saved explanations will appear here.</p>'; return; }
+  $("journalList").innerHTML = j.slice(0, 8).map(e => { const t = tasks.find(x => x.id === e.taskId); const n = t ? t.knowledgePoints.length : "?"; const last = e.attempts[e.attempts.length - 1], first = e.attempts[0]; const got = (last.combined || last.analysis).mentioned.length;
+    return `<div class="journal"><span><b>${esc(e.taskTitle || e.question)}</b><small>${esc(e.studentName)} · ${new Date(e.createdAt).toLocaleString()} · ${e.attempts.length} attempt${e.attempts.length > 1 ? "s" : ""} · ${last.analysis.mode === "ai" ? "AI" : "offline"}</small></span><span class="pill ${got === n ? "stable" : "review"}">${first.analysis.mentioned.length}/${n} → ${got}/${n}</span></div>`; }).join("");
+}
+
+// ---------- Boot ----------
+try { $("name").value = localStorage.getItem("oj_name") || ""; } catch {}
+$("name").oninput = () => { try { localStorage.setItem("oj_name", $("name").value); } catch {} };
+try { $("lang").value = localStorage.getItem("oj_lang") || (navigator.language?.startsWith("zh") ? "zh-CN" : "en-US"); } catch {}
+$("lang").onchange = () => { try { localStorage.setItem("oj_lang", $("lang").value); } catch {} };
+renderTaskList(); showView("tasks");
+</script>
+</body>
+</html>
