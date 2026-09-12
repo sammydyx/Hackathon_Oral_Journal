@@ -98,7 +98,7 @@ This is an early hackathon prototype. The visual dashboard and interactions demo
 
 ## Publishing teacher assignments
 
-Teachers can create a question and one knowledge point per line, then select **Publish to students**. Published assignments appear in the teacher assignment list and the student task list. Student pages poll `/api/tasks` every five seconds and refresh on focus without replacing an active answer. All demo students connected to the same server receive these assignments.
+Teachers can create a question and one knowledge point per line, then select **Publish oral task**. Published assignments appear in the teacher assignment list and the student task list. Student pages poll `/api/tasks` every five seconds and refresh on focus without replacing an active answer. All demo students connected to the same server receive these assignments.
 
 Tasks persist in `data/tasks.json` (ignored by Git). Keep this directory when restarting or redeploying the server. GET/POST `/api/tasks` provide the shared task store; invalid or empty tasks are rejected. This remains a demo API without server-side user authentication or class-specific assignment permissions. Student submission synchronization is described below.
 
@@ -114,3 +114,8 @@ Click **Submit explanation** in the student workspace. Submitted attempts upload
 - Shared teacher delivery uses this server, independently of optional Supabase student backup. Different devices must connect to the same server address.
 
 Run `node --test tests/*.test.js` to verify storage, duplicate handling, late feedback, draft exclusion, and upload recovery. Start this branch preview with `PORT=8016 node server.js`; without an AI key the app labels feedback as an offline keyword check.
+## Demo login
+
+Open the root URL to sign in. `teacher@oraljournal.demo` opens `teacher.html`; `student@oraljournal.demo` opens `student.html`. The demo buttons fill an email; Continue opens its workspace. Unknown emails show an error. Add demo accounts in `session.js`.
+
+Sessions last for the browser tab and survive refresh. Both workspaces show the current email and a Sign out button, including on mobile. Direct visits without a session return to login; mismatched roles return to their own workspace. These client-side checks are demo navigation only, not authentication or server authorization.
