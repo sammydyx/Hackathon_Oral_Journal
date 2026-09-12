@@ -119,6 +119,7 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
       taskView.querySelector('#teacher-note').onclick=()=>alert('Teacher note field will be available when journal data is connected.');
     }
     document.querySelector('#journals-nav').onclick=()=>showView('journals');
+    document.querySelector('[data-view="dashboard"]').onclick=()=>showView('dashboard');
     document.querySelector('#assignments-nav').onclick=()=>showView('assignments');
     document.querySelector('#map-nav').onclick=()=>showView('map');
     document.querySelector('#assignment-create').onclick=()=>modal.classList.add('open');
