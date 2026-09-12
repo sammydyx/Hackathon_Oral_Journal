@@ -2,3 +2,5 @@
 .env
 .pi/
 node_modules/
+
+data/

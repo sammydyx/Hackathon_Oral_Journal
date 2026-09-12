@@ -78,19 +78,39 @@ Future versions may introduce spaced follow-up prompts based on specific missing
 
 ## Run locally
 
-This initial prototype is a dependency-free static page.
+Run `npm start` with Node.js installed, then visit http://localhost:8000.
+The included server serves the login and both workspaces, plus `/api/health` and `/api/analyze`.
+To enable DeepSeek analysis, copy `.env.example` to `.env` and set your own key. Without a key, the student page uses its existing offline keyword mode.
 
-1. Clone the repository.
-2. Open `index.html` in a browser.
+## Demo login and navigation
 
-For a local web server, from the project directory run:
-
-```bash
-python3 -m http.server 8000
-```
-
-Then visit [http://localhost:8000](http://localhost:8000).
+- `teacher@oraljournal.demo` opens the latest teacher dashboard at `teacher.html`.
+- `student@oraljournal.demo` opens the full student oral journal at `student.html`.
+- The login page is `index.html`. Demo buttons fill an email; Continue opens its workspace.
+- Unknown emails show a message. Add approved demo emails to `OralJournal.accounts` in `session.js`.
+- Refresh retains the current tab’s session. Sign out returns to login. Direct workspace visits require a demo session, and a mismatched role returns to its own workspace.
+- These are client-side demo navigation checks, not real authentication or server authorization.
+- Student journals still use the upstream device-local storage workflow; the teacher dashboard still displays demo data. This integration connects login to both workspaces; it does not add student submission synchronization to the teacher dashboard.
 
 ## Project status
 
 This is an early hackathon prototype. The visual dashboard and interactions demonstrate the product direction; the AI, voice, persistence, and classroom workflows described above are planned implementation work, not claims about currently available functionality.
+
+## Publishing teacher assignments
+
+Teachers can create a question and one knowledge point per line, then select **Publish to students**. Published assignments appear in the teacher assignment list and the student task list. Student pages poll `/api/tasks` every five seconds and refresh on focus without replacing an active answer. All demo students connected to the same server receive these assignments.
+
+Tasks persist in `data/tasks.json` (ignored by Git). Keep this directory when restarting or redeploying the server. GET/POST `/api/tasks` provide the shared task store; invalid or empty tasks are rejected. This remains a demo API without server-side user authentication or class-specific assignment permissions. Student submission synchronization is described below.
+
+
+## Student submissions → teacher
+
+Click **Submit explanation** in the student workspace. Submitted attempts upload automatically to the same Node server; drafts remain in browser storage (and the optional student cloud store). Open **My assignments → Student submissions** as the teacher to see answers, timestamps, each attempt, idea coverage, and feedback. Filter by task or refresh manually; the list also polls every five seconds and preserves expanded answers.
+
+- The server saves submissions in `data/submissions.json` using atomic file replacement. Preserve `data/` across server restarts and deployments. This file store supports one Node server process.
+- Attempts use stable IDs for idempotent retry. Feedback updates a pending attempt without creating a duplicate; a late pending request cannot overwrite completed feedback.
+- Failed uploads retry every five seconds, on reconnect, and on focus. Reopening the student page retries persisted attempts. Only submitted answers are sent to the teacher API.
+- This follows the existing single-classroom **demo identity** model. The API has no trusted authentication or class permissions, and feedback is client-provided. Production use needs authenticated students/teachers and classroom authorization. The existing teacher overview and roster still contain sample data; live answers are under **Student submissions**.
+- Shared teacher delivery uses this server, independently of optional Supabase student backup. Different devices must connect to the same server address.
+
+Run `node --test tests/*.test.js` to verify storage, duplicate handling, late feedback, draft exclusion, and upload recovery. Start this branch preview with `PORT=8016 node server.js`; without an AI key the app labels feedback as an offline keyword check.
