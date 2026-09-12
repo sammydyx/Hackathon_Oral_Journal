@@ -1,3 +1,5 @@
+import { submissionsAPI } from './submissions-store.js';
+import crypto from "node:crypto";
 // Oral Journal - static file server + AI analysis endpoint (DeepSeek).
 // Run: DEEPSEEK_API_KEY=... node server.js   (or put the key in .env)
 import http from "node:http";
@@ -15,6 +17,11 @@ try {
   }
 } catch {}
 
+const taskFile = path.join(here, "data", "tasks.json");
+function readTasks() {
+  try { return JSON.parse(fs.readFileSync(taskFile, "utf8")); }
+  catch (error) { if (error.code === "ENOENT") return []; throw error; }
+}
 const PORT = Number(process.env.PORT || 8000);
 const API_KEY = process.env.DEEPSEEK_API_KEY;
 const BASE_URL = (process.env.DEEPSEEK_BASE_URL || "https://api.deepseek.com").replace(/\/$/, "");
@@ -87,6 +94,14 @@ function send(res, status, data, type = "application/json") {
 
 http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
+  const handled = submissionsAPI(req, res, url, path.join(here, 'data'), send);
+  if (handled) { await handled; return; }
+  if (url.pathname === "/api/storage-config") {
+    const key = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY || "";
+    let publicKey = key.startsWith("sb_publishable_");
+    try { publicKey ||= JSON.parse(Buffer.from(key.split(".")[1], "base64url")).role === "anon"; } catch {}
+    return send(res, 200, publicKey ? { url: process.env.SUPABASE_URL, key } : {});
+  }
   if (url.pathname === "/api/health") return send(res, 200, { ok: true, ai: hasKey, provider: "deepseek", model: MODEL });
   if (url.pathname === "/api/analyze" && req.method === "POST") {
     if (!hasKey) return send(res, 503, { error: "No DEEPSEEK_API_KEY configured on the server." });
@@ -104,8 +119,32 @@ http.createServer(async (req, res) => {
     });
     return;
   }
+  if (url.pathname === "/api/tasks") {
+    try {
+      if (req.method === "GET") return send(res, 200, { tasks: readTasks() });
+      if (req.method !== "POST") return send(res, 405, { error: "Method not allowed" });
+      let raw = "";
+      for await (const chunk of req) { raw += chunk; if (raw.length > 30000) return send(res, 413, { error: "Task is too large" }); }
+      let body;
+      try { body = JSON.parse(raw); } catch { return send(res, 400, { error: "Invalid JSON" }); }
+      const question = typeof body.question === "string" ? body.question.trim() : "";
+      const points = Array.isArray(body.knowledgePoints) ? body.knowledgePoints : [];
+      if (!question || question.length > 2000 || !points.length || points.length > 30 || points.some(p => typeof p !== "string" || !p.trim() || p.length > 500)) return send(res, 400, { error: "Enter a question and 1–30 knowledge points." });
+      const task = { id: crypto.randomUUID(), title: question, question, subject: "Teacher assignment", icon: "◌", createdAt: new Date().toISOString(), knowledgePoints: points.map((name,i) => ({ id: `point-${i+1}`, name: name.trim(), criteria: name.trim(), misconception: "" })) };
+      const tasks = readTasks(); tasks.unshift(task);
+      fs.mkdirSync(path.dirname(taskFile), { recursive: true });
+      fs.writeFileSync(taskFile + ".tmp", JSON.stringify(tasks, null, 2));
+      fs.renameSync(taskFile + ".tmp", taskFile);
+      return send(res, 201, { task });
+    } catch { return send(res, 500, { error: "Could not save or load tasks. Please try again." }); }
+  }
   // Static files
-  let file = url.pathname === "/" ? "/index.html" : decodeURIComponent(url.pathname);
+  let file;
+  try { file = url.pathname === "/" ? "/index.html" : decodeURIComponent(url.pathname); }
+  catch { return send(res, 400, "Bad request", "text/plain"); }
+  // Explicit public assets: never expose .env, source configuration, or repository files.
+  const publicFiles = new Set(["/index.html", "/student.html", "/teacher.html", "/welcome.css", "/session.js", "/cloud-sync.js", "/tasks.js", "/submission-sync.js", "/teacher-submissions.js"]);
+  if (!publicFiles.has(file)) return send(res, 404, "Not found", "text/plain");
   file = path.normalize(file).replace(/^(\.\.[/\\])+/, "");
   const full = path.join(here, file);
   if (!full.startsWith(here) || !fs.existsSync(full) || fs.statSync(full).isDirectory()) return send(res, 404, "Not found", "text/plain");

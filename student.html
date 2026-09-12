@@ -31,20 +31,7 @@
     .prompt{border-left:4px solid #e2b454;background:#fffaf0;padding:14px 16px;border-radius:10px;margin-top:14px}.prompt h3{margin:0 0 6px;font-size:14px}.prompt p{margin:0;font-size:13px;color:#6a5730;line-height:1.55}
     table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}th{text-align:left;color:var(--muted);font-size:11px;padding:8px;border-bottom:1px solid var(--line)}td{padding:10px 8px;border-bottom:1px solid #f0f1f2;vertical-align:top}
     .pill{display:inline-block;padding:3px 8px;border-radius:20px;font-weight:750;font-size:11px}.stable{background:var(--mint);color:var(--mintInk)}.review{background:var(--amber);color:var(--amberInk)}.err{background:var(--redBg);color:var(--red)}.neutral{background:#eef1f3;color:#50616e}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 19px;box-shadow:0 2px 6px #182a3408}.stat .label{font-size:12px;color:var(--muted);font-weight:700}.stat .num{font-size:26px;font-weight:800;margin-top:6px}.stat .num span{font-size:12px;color:var(--muted);font-weight:600;margin-left:4px}
-    .entries{display:grid;gap:16px;margin-top:22px}
-    .entry{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 6px #182a3408;overflow:hidden}
-    .entryHead{display:flex;gap:14px;align-items:center;padding:18px 20px}.entryHead .taskIcon{width:46px;height:46px}.entryHead h2{margin:0 0 4px;font-size:16px}.entryHead p{margin:0;color:var(--muted);font-size:12px}
-    .score{margin-left:auto;text-align:right;flex:none}.score .big{font-size:22px;font-weight:800;line-height:1}.score .big span{font-size:13px;color:var(--muted);font-weight:600}.score .label{font-size:11px;color:var(--muted);margin-top:3px}
-    .bar{height:6px;background:#edf0f2;margin:0 20px;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#3aa374,#1e7d72);border-radius:6px;transition:width .4s}
-    .chips{display:flex;flex-wrap:wrap;gap:8px;padding:14px 20px 16px}.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:700;background:#eef1f3;color:#50616e}.chip.ok{background:var(--mint);color:var(--mintInk)}.chip.warn{background:var(--amber);color:var(--amberInk)}.chip.bad{background:var(--redBg);color:var(--red)}.chip em{font-style:normal;font-weight:600;opacity:.75}
-    .entryFoot{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:0 20px 16px}.entryFoot .status{margin-left:auto}
-    .small{padding:8px 12px;font-size:12px}
-    .entryBody{border-top:1px solid var(--line);background:#fafbfa;padding:16px 20px 18px}.entryBody h3{margin:0 0 8px;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
-    .said{background:#fff;border:1px solid var(--line);border-left:4px solid #cfe6d8;border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.6;margin-bottom:12px;color:#2b3a45}.said.second{border-left-color:#e2b454}.said small{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-bottom:4px}
-    .fb{font-size:13px;line-height:1.55;color:#4a5a63;background:#fff;border:1px dashed #d8dee2;border-radius:10px;padding:12px 14px}
-    .emptyJ{background:#fff;border:1px dashed #cfd6db;border-radius:16px;padding:44px 20px;text-align:center;margin-top:22px}.emptyJ .ico{font-size:34px}.emptyJ h2{margin:10px 0 6px;font-size:17px}.emptyJ p{margin:0 0 16px;color:var(--muted);font-size:13px}
-    @media(max-width:700px){.stats{grid-template-columns:1fr}.score{width:100%;text-align:left;margin-left:0}}
+    .journal{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}.journal:last-child{border:0}.journal small{display:block;color:var(--muted)}
     .hidden{display:none}.note{font-size:11px;color:var(--muted);margin-top:8px}
     .tasks{display:grid;gap:14px;margin-top:18px}.taskCard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 19px;box-shadow:0 2px 6px #182a3408;display:flex;gap:14px;align-items:center;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}.taskCard:hover{border-color:#b9cbd6}
     .taskIcon{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:#e8f1f8;color:#2b668d;font-size:21px;flex:none}.taskCard h2{margin:0 0 4px;font-size:15px}.taskCard p{margin:0;color:var(--muted);font-size:12px}.taskCard .right{margin-left:auto;text-align:right;flex:none}.taskCard .arrow{color:#a2b0ba;font-size:18px;margin-left:12px}
@@ -58,7 +45,7 @@
 <div class="app">
   <aside><div class="brand">◉ Oral Journal<span>STUDENT SPACE</span></div>
     <nav><button class="nav active" id="navTasks">◫　My tasks</button><button class="nav" id="navJournal">▤　My journal</button></nav>
-    <div class="profile">Your name<input id="name" placeholder="e.g. Amy" /><small>Used only to label your journal on this device.</small></div>
+    <div class="profile">Your name<input id="name" placeholder="e.g. Amy" /><small>Shared with your teacher when you submit an explanation.</small></div>
   </aside>
   <main><div class="session-bar"><span>Student · <span data-session-email></span></span><button type="button" data-sign-out>Sign out</button></div>
 
@@ -66,15 +53,11 @@
     <section id="viewTasks">
       <h1>My oral tasks</h1>
       <p class="subtitle" id="taskCount"></p>
-      <div class="tasks" id="taskList"></div>
-    </section>
-
-    <!-- ================= VIEW 3: JOURNAL ================= -->
-    <section id="viewJournal" class="hidden">
-      <h1>My journal</h1>
-      <p class="subtitle">Everything you have explained, in your own words. Saved on this device only.</p>
-      <div class="stats" id="journalStats"></div>
-      <div class="entries" id="journalList"></div>
+      <p id="task-sync-status" class="note" role="status"></p><div class="tasks" id="taskList"></div>
+      <section class="card" id="journalCard">
+        <div class="heading"><h2>My journal</h2><span class="status">saved on this device only</span></div>
+        <div id="journalList"><p class="desc">No entries yet. Your saved explanations will appear here.</p></div>
+      </section>
     </section>
 
     <!-- ================= VIEW 2: ONE TASK ================= -->
@@ -94,15 +77,15 @@
         <section class="card">
           <div class="heading"><h2 id="attemptTitle">Your explanation</h2><span class="status" id="recStatus"></span></div>
           <p class="desc" id="attemptDesc">Press record and talk. Stop when you are done, then check your explanation.</p>
-          <textarea id="transcript" readonly placeholder="Press Record and start talking. Your words will appear here."></textarea>
+          <textarea id="transcript" placeholder="Type your answer or press Record. Your draft saves automatically."></textarea>
           <div class="row">
             <button class="ghost" id="recBtn">🎙 Record</button>
             <select id="lang" class="ghost" title="Speech recognition language"><option value="en-US">English</option><option value="zh-CN">中文</option></select>
-            <button class="primary" id="analyzeBtn">Check my explanation</button>
+            <button class="primary" id="analyzeBtn">Submit explanation</button>
             <button class="ghost hidden" id="againBtn">Fill the gaps →</button>
             <button class="primary hidden" id="saveBtn">Save to my journal</button>
           </div>
-          <p class="note" id="speechNote"></p>
+          <p class="note" id="speechNote"></p><p class="status" id="saveStatus" role="status" aria-live="polite"></p>
         </section>
 
         <section class="card" id="resultCard">
@@ -118,6 +101,7 @@
         </section>
       </div>
 
+      <section class="card"><div class="heading"><h2>Submission history</h2></div><div id="attemptHistory"></div></section>
       <section class="card hidden" id="progressCard">
         <div class="heading"><h2>Your progress on this task</h2><span class="pill stable" id="progressPill"></span></div>
         <p class="desc">Compared by knowledge point. Ideas you expressed in attempt 1 carry over; attempt 2 only had to fill the gaps.</p>
@@ -129,7 +113,7 @@
 
 <script>
 // ---------- Tasks (shared contract with the teacher page) ----------
-// The teacher page can write an array of tasks with this shape to localStorage["oj_tasks"].
+// Teacher assignments are loaded from the shared server.
 const DEMO_TASKS = [
   { id: "fractions-1", subject: "Grade 5 Mathematics", icon: "⅔", title: "Comparing fractions", question: "Why is 3/4 greater than 2/3?", due: "Tomorrow, 5:00 PM",
     knowledgePoints: [
@@ -154,12 +138,6 @@ const DEMO_TASKS = [
     ] }
 ];
 let tasks = DEMO_TASKS;
-try {
-  const arr = JSON.parse(localStorage.getItem("oj_tasks"));
-  if (Array.isArray(arr) && arr.length && arr.every(t => t.knowledgePoints?.length)) tasks = arr;
-  else { const one = JSON.parse(localStorage.getItem("oj_task")); if (one && one.knowledgePoints?.length) tasks = [one, ...DEMO_TASKS.filter(d => d.id !== one.id)]; }
-} catch {}
-
 // ---------- State ----------
 let task = null, pointById = {}, attempt = 1, attempts = [], focusIds = [], aiAvailable = false;
 const $ = id => document.getElementById(id);
@@ -199,6 +177,9 @@ function offlineAnalyze(text, points) {
 
 // ---------- View 1: task list ----------
 function taskStatus(t) {
+  const work = readWork(t.id);
+  if (work.attempts?.length) return { label: `${work.attempts.length} submissions`, cls: "stable" };
+  if (work.draft) return { label: "Draft saved", cls: "review" };
   const j = loadJournals().find(e => e.taskId === t.id);
   if (!j) return { label: "Not started", cls: "neutral" };
   const n = t.knowledgePoints.length, last = j.attempts[j.attempts.length - 1];
@@ -213,16 +194,19 @@ function renderTaskList() {
   renderJournals();
 }
 function showView(name) {
-  $("viewTasks").classList.toggle("hidden", name !== "tasks"); $("viewTask").classList.toggle("hidden", name !== "task"); $("viewJournal").classList.toggle("hidden", name !== "journal");
-  $("navTasks").classList.toggle("active", name === "tasks" || name === "task"); $("navJournal").classList.toggle("active", name === "journal");
+  if (name === "tasks" && task) { persistTask(); stopRecording(); }
+  $("viewTasks").classList.toggle("hidden", name !== "tasks"); $("viewTask").classList.toggle("hidden", name !== "task");
+  $("navTasks").classList.toggle("active", name === "tasks"); $("navJournal").classList.toggle("active", false);
   window.scrollTo({ top: 0 });
 }
-$("navTasks").onclick = () => { if (recording) rec.stop(); renderTaskList(); showView("tasks"); };
+$("navTasks").onclick = () => { renderTaskList(); showView("tasks"); };
 $("backBtn").onclick = () => { if (recording) rec.stop(); renderTaskList(); showView("tasks"); };
-$("navJournal").onclick = () => { if (recording) rec.stop(); renderJournals(); showView("journal"); };
+$("navJournal").onclick = () => { renderTaskList(); showView("tasks"); $("journalCard").scrollIntoView({ behavior: "smooth" }); };
 
 // ---------- View 2: one task ----------
 function openTask(id) {
+  if (task) persistTask();
+  stopRecording();
   task = tasks.find(t => t.id === id); if (!task) return;
   pointById = Object.fromEntries(task.knowledgePoints.map(p => [p.id, p]));
   attempt = 1; attempts = []; focusIds = [];
@@ -235,6 +219,7 @@ function openTask(id) {
   $("resultEmpty").classList.remove("hidden"); $("results").classList.add("hidden"); $("modeTag").classList.add("hidden");
   $("progressCard").classList.add("hidden"); $("againBtn").classList.add("hidden"); $("saveBtn").classList.add("hidden");
   $("saveBtn").textContent = "Save to my journal"; $("saveBtn").disabled = false;
+  restoreTask();
   showView("task");
 }
 
@@ -243,11 +228,12 @@ const SR = window.SpeechRecognition || window.webkitSpeechRecognition; let rec =
 if (!SR) { $("speechNote").textContent = "Voice recording needs Chrome or Edge on this device."; $("recBtn").disabled = true; }
 $("recBtn").onclick = () => {
   if (recording) { rec.stop(); return; }
+  const recordingTask = task.id;
   rec = new SR(); rec.lang = $("lang").value; rec.continuous = true; rec.interimResults = true;
   baseText = $("transcript").value.trim(); let finalText = "";
-  rec.onresult = e => { let interim = ""; finalText = "";
+  rec.onresult = e => { if (task?.id !== recordingTask) return; let interim = ""; finalText = "";
     for (let i = 0; i < e.results.length; i++) { const s = e.results[i][0].transcript; if (e.results[i].isFinal) finalText += s + " "; else interim += s; }
-    $("transcript").value = (baseText ? baseText + " " : "") + finalText + interim; };
+    $("transcript").value = (baseText ? baseText + " " : "") + finalText + interim; persistTask(); };
   rec.onerror = e => { $("recStatus").textContent = "Mic error: " + e.error; stopUI(); };
   rec.onend = stopUI;
   rec.start(); recording = true; $("recBtn").innerHTML = '<span class="dot"></span>Stop'; $("recBtn").classList.add("rec"); $("recStatus").textContent = "Listening… speak naturally";
@@ -257,33 +243,38 @@ function stopUI(){ recording = false; $("recBtn").textContent = "🎙 Record"; $
 // ---------- Submit ----------
 $("analyzeBtn").onclick = async () => {
   const text = $("transcript").value.trim();
-  if (text.length < 15) { $("recStatus").textContent = "Say a little more first, then stop recording."; return; }
-  if (recording) rec.stop();
-  $("analyzeBtn").disabled = true; $("analyzeBtn").textContent = "Listening for your ideas…";
+  if (text.length < 15) { $("recStatus").textContent = "Write or say a little more before submitting."; return; }
+  stopRecording();
+  const submittedTask = task, submittedId = task.id;
+  const previous = attempts.at(-1);
+  const previousAnalysis = previous && (previous.combined || previous.analysis);
+  const scopedIds = [...focusIds];
+  const entry = { id: crypto.randomUUID(), n: attempts.length + 1, transcript: text,
+    at: new Date().toISOString(), status: "pending" };
+  attempts.push(entry);
+  $("transcript").value = "";
+  persistTask(); renderHistory();
+  $("analyzeBtn").disabled = true; $("analyzeBtn").textContent = "Checking your ideas…";
   try {
-    if (attempt === 1) {
-      const analysis = await analyzeTranscript(text, task.knowledgePoints, null, false);
-      dedupe(analysis);
-      attempts = [{ n: 1, transcript: text, analysis, at: new Date().toISOString() }]; // re-checking attempt 1 replaces it, never stacks
-      renderAnalysis(analysis, null);
-      focusIds = [...new Set([...analysis.missing.map(m => m.pointId), ...analysis.misconceptions.map(m => m.pointId)])];
-      if (focusIds.length) $("againBtn").classList.remove("hidden");
-      else { $("attemptDesc").textContent = "Every idea came through on the first try. You can save this to your journal."; $("saveBtn").classList.remove("hidden"); }
-    } else {
-      // Attempt 2: judge ONLY the gap points. Ideas from attempt 1 carry over untouched.
-      const focusPoints = focusIds.map(id => pointById[id]);
-      const analysis = await analyzeTranscript(text, focusPoints, attempts[0].transcript, true);
-      dedupe(analysis);
-      const a1 = attempts[0].analysis;
-      const combined = { mentioned: [...a1.mentioned.map(m => ({ ...m, from: 1 })), ...analysis.mentioned.map(m => ({ ...m, from: 2 }))],
-        missing: analysis.missing, misconceptions: analysis.misconceptions, feedback: analysis.feedback, followUpPrompt: analysis.followUpPrompt, confidence: analysis.confidence, mode: analysis.mode };
-      attempts.push({ n: 2, transcript: text, analysis, combined, focusIds, at: new Date().toISOString() });
-      renderAnalysis(combined, a1);
-      renderProgress(a1, combined);
-      $("againBtn").classList.add("hidden"); $("saveBtn").classList.remove("hidden");
-    }
-  } catch (e) { $("recStatus").textContent = "Could not analyze: " + e.message; }
-  $("analyzeBtn").disabled = false; $("analyzeBtn").textContent = "Check my explanation";
+    const points = scopedIds.length ? scopedIds.map(id => pointById[id]).filter(Boolean) : submittedTask.knowledgePoints;
+    const analysis = await analyzeTranscript(text, points, previous?.transcript, !!scopedIds.length);
+    dedupe(analysis);
+    const combined = previousAnalysis && scopedIds.length ? { ...analysis,
+      mentioned: [...previousAnalysis.mentioned.filter(m => !scopedIds.includes(m.pointId)), ...analysis.mentioned] } : analysis;
+    Object.assign(entry, { analysis, combined, status: "graded", score: combined.mentioned.length,
+      maxScore: submittedTask.knowledgePoints.length });
+  } catch (e) {
+    entry.status = "failed"; entry.error = "Feedback unavailable. Your submission is saved; you can submit another attempt.";
+  }
+  // Update the original task even if the student navigated while analysis was running.
+  const saved = readWork(submittedId);
+  saved.attempts = (saved.attempts || []).map(a => a.id === entry.id ? entry : a);
+  writeWork(submittedId, saved);
+  if (task?.id === submittedId) {
+    attempts = saved.attempts;
+    renderLatest(); renderHistory(); persistTask();
+  }
+  $("analyzeBtn").disabled = false; $("analyzeBtn").textContent = "Submit explanation";
 };
 // A point flagged as a misconception is shown once, in the "check this idea" list, not also as expressed.
 function dedupe(a) { const flagged = new Set(a.misconceptions.map(m => m.pointId)); a.mentioned = a.mentioned.filter(m => !flagged.has(m.pointId)); a.missing = a.missing.filter(m => !flagged.has(m.pointId)); const seen = new Set(); a.mentioned = a.mentioned.filter(m => !seen.has(m.pointId) && seen.add(m.pointId)); a.missing = a.missing.filter(m => !seen.has(m.pointId) && seen.add(m.pointId)); }
@@ -308,13 +299,14 @@ function renderAnalysis(a, a1) {
 }
 
 $("againBtn").onclick = () => {
-  attempt = 2;
-  $("stepTag").textContent = "ATTEMPT 2 · FILL THE GAPS"; $("attemptTitle").textContent = "Fill the gaps";
+  attempt = attempts.length + 1;
+  $("stepTag").textContent = `ATTEMPT ${attempt} · FILL THE GAPS`; $("attemptTitle").textContent = "Fill the gaps";
   const names = focusIds.map(id => pointById[id]?.name).filter(Boolean);
   $("attemptDesc").textContent = "Only talk about: " + names.join(", ") + ". The ideas you already expressed are kept, so you do not need to repeat them.";
   $("taskHint").textContent = "Highlighted ideas are the ones to fill in. Green ones are already done.";
   for (const id of focusIds) { const el = $("pt-" + id); if (el) { el.classList.add("focus"); $("ptnote-" + id).textContent = el.classList.contains("warn") ? "Explain this one again" : "Add this one"; } }
   $("transcript").value = ""; $("againBtn").classList.add("hidden");
+  persistTask();
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
@@ -336,40 +328,87 @@ function renderProgress(a1, a2) {
 }
 
 // ---------- Journal (localStorage; teacher page can aggregate from "oj_journals") ----------
-$("saveBtn").onclick = () => {
-  const j = loadJournals().filter(e => e.taskId !== task.id); const name = $("name").value.trim() || "Anonymous";
-  j.unshift({ id: "j-" + Date.now(), taskId: task.id, taskTitle: task.title, question: task.question, studentName: name, createdAt: new Date().toISOString(), attempts });
-  localStorage.setItem("oj_journals", JSON.stringify(j)); $("saveBtn").textContent = "Saved ✔"; $("saveBtn").disabled = true;
-};
-function fmtDate(iso) { const d = new Date(iso); return d.toLocaleDateString(undefined, { month: "short", day: "numeric" }) + " · " + d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" }); }
+$("saveBtn").onclick = () => { persistTask(); $("saveBtn").textContent = "Saved ✔"; };
 function renderJournals() {
-  const j = loadJournals();
-  if (!j.length) {
-    $("journalStats").innerHTML = "";
-    $("journalList").innerHTML = `<div class="emptyJ"><div class="ico">🎙</div><h2>Nothing here yet</h2><p>Finish a task and save it. Your explanations will live here, in your own words.</p><button class="primary" id="emptyGo">Pick a task</button></div>`;
-    $("emptyGo").onclick = () => { renderTaskList(); showView("tasks"); }; return;
-  }
-  let ideasTotal = 0, ideasGot = 0, complete = 0;
-  const cards = j.map(e => {
-    const t = tasks.find(x => x.id === e.taskId); const points = t ? t.knowledgePoints : []; const n = points.length;
-    const first = e.attempts[0], last = e.attempts[e.attempts.length - 1], final = last.combined || last.analysis;
-    const got = final.mentioned.length; ideasTotal += n; ideasGot += got; if (got === n) complete++;
-    const chips = points.map(p => { const st = status(final, p.id); const from = final.mentioned.find(m => m.pointId === p.id)?.from;
-      return st === "mentioned" ? `<span class="chip ok">✔ ${esc(p.name)}${from === 2 ? " <em>· added</em>" : ""}</span>` : st === "misconception" ? `<span class="chip bad">! ${esc(p.name)}</span>` : `<span class="chip warn">○ ${esc(p.name)}</span>`; }).join("");
-    const body = e.attempts.map(a => `<div class="said${a.n === 2 ? " second" : ""}"><small>ATTEMPT ${a.n}${a.n === 2 ? " · filling the gaps" : ""}</small>${esc(a.transcript)}</div>`).join("") + (final.feedback ? `<div class="fb">${esc(final.feedback)}</div>` : "");
-    return `<article class="entry" data-id="${esc(e.id)}">
-      <div class="entryHead"><div class="taskIcon">${esc(t?.icon || "◌")}</div><div><h2>${esc(e.taskTitle || e.question)}</h2><p>${esc(t?.subject || "")}${t?.subject ? " · " : ""}${fmtDate(e.createdAt)} · ${e.attempts.length} attempt${e.attempts.length > 1 ? "s" : ""}</p></div>
-        <div class="score"><div class="big">${got}<span>/ ${n} ideas</span></div><div class="label">${first.analysis.mentioned.length}/${n} on the first try</div></div></div>
-      <div class="bar"><i style="width:${n ? Math.round(got / n * 100) : 0}%"></i></div>
-      <div class="chips">${chips}</div>
-      <div class="entryFoot"><button class="ghost small" data-toggle>Read what I said</button>${t ? `<button class="ghost small" data-retry="${esc(t.id)}">Try again</button>` : ""}<span class="status">${last.analysis.mode === "ai" ? "AI · against teacher's criteria" : "offline keyword check"}</span></div>
-      <div class="entryBody hidden"><h3>In my own words</h3>${body}</div>
-    </article>`; }).join("");
-  $("journalStats").innerHTML = `<div class="stat"><div class="label">Explanations saved</div><div class="num">${j.length}</div></div><div class="stat"><div class="label">Ideas expressed</div><div class="num">${ideasGot}<span>of ${ideasTotal}</span></div></div><div class="stat"><div class="label">Fully covered</div><div class="num">${complete}<span>of ${j.length} tasks</span></div></div>`;
-  $("journalList").innerHTML = cards;
-  document.querySelectorAll("[data-toggle]").forEach(b => b.onclick = () => { const body = b.closest(".entry").querySelector(".entryBody"); const open = body.classList.toggle("hidden"); b.textContent = open ? "Read what I said" : "Hide"; });
-  document.querySelectorAll("[data-retry]").forEach(b => b.onclick = () => openTask(b.dataset.retry));
+  const j = loadJournals(); if (!j.length) { $("journalList").innerHTML = '<p class="desc">No entries yet. Your saved explanations will appear here.</p>'; return; }
+  $("journalList").innerHTML = j.slice(0, 8).map(e => { const t = tasks.find(x => x.id === e.taskId); const n = t ? t.knowledgePoints.length : "?"; const last = e.attempts[e.attempts.length - 1], first = e.attempts[0]; const got = (last.combined || last.analysis).mentioned.length;
+    return `<div class="journal"><span><b>${esc(e.taskTitle || e.question)}</b><small>${esc(e.studentName)} · ${new Date(e.createdAt).toLocaleString()} · ${e.attempts.length} attempt${e.attempts.length > 1 ? "s" : ""} · ${last.analysis.mode === "ai" ? "AI" : "offline"}</small></span><span class="pill ${got === n ? "stable" : "review"}">${first.analysis.mentioned.length}/${n} → ${got}/${n}</span></div>`; }).join("");
 }
+
+// ---------- Durable drafts and append-only submission history ----------
+const workPrefix = "oj_work_v1:" + (OralJournal.read()?.email || "student") + ":";
+function readWork(id) {
+  try { return JSON.parse(localStorage.getItem(workPrefix + id)) || {}; } catch { return {}; }
+}
+function writeWork(id, work) {
+  work.updatedAt = new Date().toISOString();
+  try {
+    localStorage.setItem(workPrefix + id, JSON.stringify(work));
+    $("saveStatus").textContent = "Saved on this browser · " + new Date().toLocaleTimeString();
+    window.dispatchEvent(new CustomEvent("oj-work-saved", { detail: { id, work } }));
+    return true;
+  } catch {
+    $("saveStatus").textContent = "Could not save — browser storage is full or unavailable. Keep this page open and copy your answer.";
+    return false;
+  }
+}
+function persistTask() {
+  if (!task) return;
+  const work = { task: structuredClone(task), draft: $("transcript").value,
+    attempts: structuredClone(attempts), focusIds: [...focusIds] };
+  if (!writeWork(task.id, work)) return;
+  // Preserve the teacher dashboard's existing journal contract.
+  const graded = attempts.filter(a => a.analysis);
+  if (graded.length) {
+    const journals = loadJournals().filter(j => j.taskId !== task.id);
+    journals.unshift({ id: "j-" + task.id, taskId: task.id, taskTitle: task.title,
+      question: task.question, studentName: $("name").value.trim() || "Anonymous",
+      createdAt: graded.at(-1).at, attempts: graded });
+    try { localStorage.setItem("oj_journals", JSON.stringify(journals)); } catch {}
+  }
+}
+function stopRecording() {
+  if (rec) { rec.onresult = null; if (recording) rec.stop(); }
+  stopUI();
+}
+function restoreTask() {
+  let work = readWork(task.id);
+  if (!work.attempts) {
+    const legacy = loadJournals().find(j => j.taskId === task.id);
+    work = { draft: "", attempts: (legacy?.attempts || []).map(a => ({ ...a, id: crypto.randomUUID(), status: "graded" })) };
+  }
+  attempts = work.attempts || []; focusIds = work.focusIds || [];
+  $("transcript").value = work.draft || "";
+  renderLatest(); renderHistory();
+  $("saveStatus").textContent = work.updatedAt ? "Restored saved work · " + new Date(work.updatedAt).toLocaleString() : "Your draft saves automatically on this browser.";
+}
+function renderLatest() {
+  const last = [...attempts].reverse().find(a => a.analysis);
+  if (last) {
+    const a = last.combined || last.analysis;
+    renderAnalysis(a, null);
+    focusIds = [...new Set([...a.missing, ...a.misconceptions].map(m => m.pointId))];
+    $("againBtn").classList.toggle("hidden", !focusIds.length);
+    $("saveBtn").classList.remove("hidden");
+  }
+  attempt = attempts.length + 1;
+  $("stepTag").textContent = `ATTEMPT ${attempt} · NEW EXPLANATION`;
+  $("attemptDesc").textContent = "Type or record your answer. Drafts save automatically; each submission keeps its own feedback.";
+}
+function renderHistory() {
+  $("attemptHistory").innerHTML = attempts.length ? attempts.map(a => {
+    const result = a.combined || a.analysis;
+    return `<details class="card"><summary>Attempt ${a.n} · ${esc(new Date(a.at).toLocaleString())} · ${result ? `${result.mentioned.length}/${a.maxScore || task.knowledgePoints.length} ideas expressed` : a.status === "failed" ? "Feedback unavailable" : "Awaiting feedback"}</summary>
+      <h3>Your submitted answer</h3><p style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(a.transcript)}</p>
+      ${result ? `<p>${esc(result.feedback)}</p><p class="note">${result.mode === "ai" ? "AI feedback" : "Offline keyword check"} · Idea coverage, not an official grade</p>
+      <ul>${result.mentioned.map(m => `<li>Expressed: ${esc(pointById[m.pointId]?.name)} — ${esc(m.quote)}</li>`).join("")}${result.missing.map(m => `<li>Not yet: ${esc(pointById[m.pointId]?.name)} — ${esc(m.hint)}</li>`).join("")}${result.misconceptions.map(m => `<li>Check: ${esc(pointById[m.pointId]?.name)} — ${esc(m.correction)}</li>`).join("")}</ul>` : `<p>${esc(a.error || "The answer is saved. If feedback was interrupted, submit again when you are ready.")}</p>`}</details>`;
+  }).join("") : '<p class="desc">No submissions yet. Your unfinished answer is saved as a draft.</p>';
+}
+$("transcript").addEventListener("input", persistTask);
+window.addEventListener("pagehide", persistTask);
+document.addEventListener("visibilitychange", () => { if (document.hidden) persistTask(); });
+window.OJWork = { read: readWork, prefix: workPrefix,
+  refresh() { if (task) restoreTask(); renderTaskList(); } };
 
 // ---------- Boot ----------
 try { $("name").value = localStorage.getItem("oj_name") || ""; } catch {}
@@ -377,7 +416,20 @@ $("name").oninput = () => { try { localStorage.setItem("oj_name", $("name").valu
 try { $("lang").value = localStorage.getItem("oj_lang") || (navigator.language?.startsWith("zh") ? "zh-CN" : "en-US"); } catch {}
 $("lang").onchange = () => { try { localStorage.setItem("oj_lang", $("lang").value); } catch {} };
 renderTaskList(); showView("tasks");
+let syncingTasks=false;
+async function syncTasks(){
+  if(syncingTasks) return; syncingTasks=true;
+  try { const response=await fetch('/api/tasks'); if(!response.ok) throw new Error(); const data=await response.json();
+    tasks=[...data.tasks,...DEMO_TASKS]; renderTaskList();
+    $('task-sync-status').textContent='Teacher assignments are up to date · checks every 5 seconds';
+  } catch { $('task-sync-status').textContent='Unable to sync teacher assignments. Retrying automatically.'; }
+  finally { syncingTasks=false; }
+}
+syncTasks();setInterval(()=>{if(!document.hidden) syncTasks();},5000);
+window.addEventListener('focus',syncTasks);
 </script>
 <script>OralJournal.guard("student");window.addEventListener("pageshow",()=>OralJournal.guard("student"));</script>
+<script src="submission-sync.js"></script>
+<script src="cloud-sync.js"></script>
 </body>
 </html>
