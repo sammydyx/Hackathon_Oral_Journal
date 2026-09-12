@@ -94,3 +94,9 @@ Then visit [http://localhost:8000](http://localhost:8000).
 ## Project status
 
 This is an early hackathon prototype. The visual dashboard and interactions demonstrate the product direction; the AI, voice, persistence, and classroom workflows described above are planned implementation work, not claims about currently available functionality.
+
+## Demo login
+
+Open the root URL to sign in. `teacher@oraljournal.demo` opens `teacher.html`; `student@oraljournal.demo` opens `student.html`. The demo buttons fill an email; Continue opens its workspace. Unknown emails show an error. Add demo accounts in `session.js`.
+
+Sessions last for the browser tab and survive refresh. Both workspaces show the current email and a Sign out button, including on mobile. Direct visits without a session return to login; mismatched roles return to their own workspace. These client-side checks are demo navigation only, not authentication or server authorization.
