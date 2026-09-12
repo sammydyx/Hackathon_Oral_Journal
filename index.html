@@ -33,7 +33,7 @@
         </div>
       </section></section>
       <section id="roster-view" hidden><div class="top"><div><h1>Student roster</h1><p class="subtitle">Grade 5 Mathematics · 30 students enrolled in this class.</p></div><button class="primary" id="back-dashboard">← Back to overview</button></div><div class="roster-toolbar"><span class="desc" id="roster-count">30 students</span><input class="roster-search" id="roster-search" type="search" placeholder="Search by name or student ID" aria-label="Search student roster" /></div><article class="card"><table><thead><tr><th>Student</th><th>Student ID</th><th>Teacher note</th></tr></thead><tbody id="roster-body"></tbody></table></article></section>
-      <section id="journals-view" hidden><div class="top"><div><h1>Student Journal Review</h1><p class="subtitle">Select a student to review their oral learning journals and progress over time.</p></div></div><div class="roster-toolbar"><span class="desc" id="journals-count">30 students with journals</span><input class="roster-search" id="journals-search" type="search" placeholder="Search by name or student ID" aria-label="Search student journals" /></div><article class="card"><table><thead><tr><th>Student</th><th>Latest oral task</th><th>Status</th><th></th></tr></thead><tbody id="journals-body"></tbody></table></article></section>
+      <section id="journals-view" hidden><div class="top"><div><h1>Student Journal Review</h1><p class="subtitle">Choose an oral task first, then filter and review the students who completed it.</p></div></div><div class="roster-toolbar"><div style="display:flex;gap:10px;flex-wrap:wrap"><select class="roster-search" id="task-filter" aria-label="Filter by oral task" style="width:230px"><option value="">Select an oral task</option></select><select class="roster-search" id="status-filter" aria-label="Filter by journal status" style="width:180px"><option value="all">All statuses</option><option value="Secure">Secure</option><option value="Needs follow-up">Needs follow-up</option></select></div><input class="roster-search" id="journals-search" type="search" placeholder="Search by name or student ID" aria-label="Search student journals" /></div><p class="desc" id="journals-count">Select an oral task to view students.</p><article class="card"><table><thead><tr><th>Student</th><th>Selected oral task</th><th>Status</th><th></th></tr></thead><tbody id="journals-body"></tbody></table></article></section>
       <section id="student-view" hidden></section>
       <section id="task-view" hidden></section>
       <section id="assignments-view" hidden><div class="top"><div><h1>My assignments</h1><p class="subtitle">Create and monitor oral tasks for Grade 5 Mathematics.</p></div><button class="primary" id="assignment-create">＋ Create oral task</button></div><div class="assignment-grid"><article class="card assignment-card"><span class="tag">Active · Due tomorrow</span><h2>Comparing fractions</h2><p>Why is 3/4 greater than 2/3?</p><p><b>30</b> responses · <b>14</b> students need follow-up</p><button class="outline">View class results →</button></article><article class="card assignment-card"><span class="tag">Completed · Sep 10</span><h2>Place value</h2><p>Explain why the same digit can have different values.</p><p><b>30</b> responses · <b>24</b> students secure</p><button class="outline">View class results →</button></article><article class="card assignment-card"><span class="pill review">Draft</span><h2>Multiplication word problems</h2><p>How do you decide whether multiplication is the right operation?</p><p>No student responses yet.</p><button class="outline">Edit task →</button></article></div></section>
@@ -80,7 +80,7 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
       Object.entries(views).forEach(([name,element])=>element.hidden=name!==view);
       document.querySelectorAll('.nav[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===view || (['student','task'].includes(view)&&button.dataset.view==='journals')));
       if(view==='roster'){renderRoster(rosterSearch.value);rosterSearch.focus();}
-      if(view==='journals'){renderJournals(journalsSearch.value);journalsSearch.focus();}
+      if(view==='journals'){renderJournals(journalsSearch.value);taskFilter.focus();}
     }
     document.querySelector('#roster-nav').onclick=()=>showView('roster');
     document.querySelector('#back-dashboard').onclick=()=>showView('dashboard');
@@ -88,12 +88,21 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
     const journalsBody=document.querySelector('#journals-body');
     const journalsSearch=document.querySelector('#journals-search');
     const journalsCount=document.querySelector('#journals-count');
-    function journalStatus(student){return needs.denominator.includes(roster.indexOf(student))?'Needs follow-up':'Secure';}
+    const taskFilter=document.querySelector('#task-filter');
+    const statusFilter=document.querySelector('#status-filter');
+    taskFilter.innerHTML+=taskTemplates.map(task=>`<option value="${task.id}">${task.title}</option>`).join('');
+    function journalStatus(student,taskId){
+      const index=roster.indexOf(student);
+      const studentsNeedingFollowUp={fractions:needs.denominator,'place-value':[2,6,11,18,22,25],'word-problems':[0,4,9,13,16,20,23,27]};
+      return (studentsNeedingFollowUp[taskId]||[]).includes(index)?'Needs follow-up':'Secure';
+    }
     function renderJournals(query=''){
+      const task=taskTemplates.find(item=>item.id===taskFilter.value);
+      if(!task){journalsCount.textContent='Select an oral task to view students.';journalsBody.innerHTML='<tr><td colspan="4" class="roster-note">Choose a task above before selecting a student.</td></tr>';return;}
       const needle=query.trim().toLowerCase();
-      const visible=roster.filter(student=>`${student.name} ${student.id}`.toLowerCase().includes(needle));
-      journalsCount.textContent=`${visible.length} of ${roster.length} students with journals`;
-      journalsBody.innerHTML=visible.map(student=>`<tr class="click-row" data-student-id="${student.id}"><td><span class="roster-name"><span class="roster-table-avatar" style="background:${student.color}">${student.initials}</span>${student.name}</span></td><td>Comparing fractions · Attempt 2</td><td><span class="status ${journalStatus(student)==='Secure'?'good':'warn'}">${journalStatus(student)}</span></td><td><button class="outline">Review journals →</button></td></tr>`).join('');
+      const visible=roster.filter(student=>`${student.name} ${student.id}`.toLowerCase().includes(needle)&& (statusFilter.value==='all'||journalStatus(student,task.id)===statusFilter.value));
+      journalsCount.textContent=`${visible.length} of ${roster.length} students · ${task.title}`;
+      journalsBody.innerHTML=visible.map(student=>{const status=journalStatus(student,task.id);return `<tr class="click-row" data-student-id="${student.id}"><td><span class="roster-name"><span class="roster-table-avatar" style="background:${student.color}">${student.initials}</span>${student.name}</span></td><td>${task.title} · Attempt 2</td><td><span class="status ${status==='Secure'?'good':'warn'}">${status}</span></td><td><button class="outline">Review journals →</button></td></tr>`}).join('')||'<tr><td colspan="4" class="roster-note">No students match these filters.</td></tr>';
     }
     function renderStudent(student){
       selectedStudent=student;
@@ -125,7 +134,9 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
     document.querySelector('#map-review').onclick=()=>showView('journals');
     document.querySelector('#map-task').onclick=()=>alert('Task selector: Comparing fractions is currently selected.');
     journalsSearch.oninput=event=>renderJournals(event.target.value);
-    journalsBody.onclick=event=>{const row=event.target.closest('[data-student-id]');if(row){renderStudent(roster.find(student=>student.id===row.dataset.studentId));showView('student');}};
+    taskFilter.onchange=()=>renderJournals(journalsSearch.value);
+    statusFilter.onchange=()=>renderJournals(journalsSearch.value);
+    journalsBody.onclick=event=>{const row=event.target.closest('[data-student-id]');if(row){selectedTask=taskTemplates.find(task=>task.id===taskFilter.value)||taskTemplates[0];renderStudent(roster.find(student=>student.id===row.dataset.studentId));showView('student');}};
     const modal=document.querySelector('#modal');
     document.querySelector('#create').onclick=()=>modal.classList.add('open');
     document.querySelector('#cancel').onclick=()=>modal.classList.remove('open');
