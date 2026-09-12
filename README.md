@@ -119,3 +119,10 @@ Run `node --test tests/*.test.js` to verify storage, duplicate handling, late fe
 Open the root URL to sign in. `teacher@oraljournal.demo` opens `teacher.html`; `student@oraljournal.demo` opens `student.html`. The demo buttons fill an email; Continue opens its workspace. Unknown emails show an error. Add demo accounts in `session.js`.
 
 Sessions last for the browser tab and survive refresh. Both workspaces show the current email and a Sign out button, including on mobile. Direct visits without a session return to login; mismatched roles return to their own workspace. These client-side checks are demo navigation only, not authentication or server authorization.
+
+
+## Voice-only student workspace
+
+Students use one **My tasks** list. A task with prior submissions has a **Journal** link beneath it, opening that task's submission history. The answer editor has been removed. Press **Record**, speak, then **Stop recording** and **Submit explanation**. The recording panel displays microphone-driven waveform bars and elapsed time, with no live transcript. Transcription stays in memory and saved voice drafts for analysis and teacher delivery; submitted text remains available in journal history. This uses the existing speech recognition pipeline and does not store an audio file.
+
+Submission stays disabled until recognition finishes and enough speech is captured. Navigating away releases microphone resources. Older typed drafts are not restored into voice-only responses. Microphone permission and speech recognition support are required; unsupported browsers show instructions instead of a typing fallback. Waveform implementation follows the [MDN analyser documentation](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode/getByteTimeDomainData), and stop waits for the final speech result described in [SpeechRecognition.stop](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/stop).
