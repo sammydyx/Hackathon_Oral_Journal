@@ -38,6 +38,8 @@
     .back{border:0;background:transparent;color:#236d91;font:inherit;font-weight:750;padding:0;cursor:pointer;margin-bottom:10px}
     @media(max-width:900px){.app{grid-template-columns:1fr}aside{padding:18px 16px}nav,.profile{display:none}main{padding:22px 16px}.grid{grid-template-columns:1fr}h1{font-size:24px}}
   </style>
+<script src="session.js"></script>
+<style>.session-bar{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:24px;font-size:12px;color:var(--muted)}.session-bar button{padding:8px 12px;border:1px solid #ccd4d9;border-radius:8px;background:#fff;color:var(--navy);font:inherit;cursor:pointer}.session-bar span{overflow-wrap:anywhere}.session-bar button:focus-visible{outline:2px solid #1e7d72;outline-offset:3px}</style>
 </head>
 <body>
 <div class="app">
@@ -45,7 +47,7 @@
     <nav><button class="nav active" id="navTasks">◫　My tasks</button><button class="nav" id="navJournal">▤　My journal</button></nav>
     <div class="profile">Your name<input id="name" placeholder="e.g. Amy" /><small>Used only to label your journal on this device.</small></div>
   </aside>
-  <main>
+  <main><div class="session-bar"><span>Student · <span data-session-email></span></span><button type="button" data-sign-out>Sign out</button></div>
 
     <!-- ================= VIEW 1: TASK LIST ================= -->
     <section id="viewTasks">
@@ -335,5 +337,6 @@ try { $("lang").value = localStorage.getItem("oj_lang") || (navigator.language?.
 $("lang").onchange = () => { try { localStorage.setItem("oj_lang", $("lang").value); } catch {} };
 renderTaskList(); showView("tasks");
 </script>
+<script>OralJournal.guard("student");window.addEventListener("pageshow",()=>OralJournal.guard("student"));</script>
 </body>
 </html>
