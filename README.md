@@ -1,4 +1,6 @@
-# Oral Journal
+![ThinkAloud — Make thinking visible. Students explain their thinking, AI organizes learning evidence, and teachers guide the next step.](docs/images/thinkaloud-concept.png)
+
+# ThinkAloud
 
 **Oral Journal helps teachers hear how students think, not only whether they reached the right answer.**
 
