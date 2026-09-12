@@ -31,7 +31,20 @@
     .prompt{border-left:4px solid #e2b454;background:#fffaf0;padding:14px 16px;border-radius:10px;margin-top:14px}.prompt h3{margin:0 0 6px;font-size:14px}.prompt p{margin:0;font-size:13px;color:#6a5730;line-height:1.55}
     table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}th{text-align:left;color:var(--muted);font-size:11px;padding:8px;border-bottom:1px solid var(--line)}td{padding:10px 8px;border-bottom:1px solid #f0f1f2;vertical-align:top}
     .pill{display:inline-block;padding:3px 8px;border-radius:20px;font-weight:750;font-size:11px}.stable{background:var(--mint);color:var(--mintInk)}.review{background:var(--amber);color:var(--amberInk)}.err{background:var(--redBg);color:var(--red)}.neutral{background:#eef1f3;color:#50616e}
-    .journal{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}.journal:last-child{border:0}.journal small{display:block;color:var(--muted)}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 19px;box-shadow:0 2px 6px #182a3408}.stat .label{font-size:12px;color:var(--muted);font-weight:700}.stat .num{font-size:26px;font-weight:800;margin-top:6px}.stat .num span{font-size:12px;color:var(--muted);font-weight:600;margin-left:4px}
+    .entries{display:grid;gap:16px;margin-top:22px}
+    .entry{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 6px #182a3408;overflow:hidden}
+    .entryHead{display:flex;gap:14px;align-items:center;padding:18px 20px}.entryHead .taskIcon{width:46px;height:46px}.entryHead h2{margin:0 0 4px;font-size:16px}.entryHead p{margin:0;color:var(--muted);font-size:12px}
+    .score{margin-left:auto;text-align:right;flex:none}.score .big{font-size:22px;font-weight:800;line-height:1}.score .big span{font-size:13px;color:var(--muted);font-weight:600}.score .label{font-size:11px;color:var(--muted);margin-top:3px}
+    .bar{height:6px;background:#edf0f2;margin:0 20px;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#3aa374,#1e7d72);border-radius:6px;transition:width .4s}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;padding:14px 20px 16px}.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:700;background:#eef1f3;color:#50616e}.chip.ok{background:var(--mint);color:var(--mintInk)}.chip.warn{background:var(--amber);color:var(--amberInk)}.chip.bad{background:var(--redBg);color:var(--red)}.chip em{font-style:normal;font-weight:600;opacity:.75}
+    .entryFoot{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:0 20px 16px}.entryFoot .status{margin-left:auto}
+    .small{padding:8px 12px;font-size:12px}
+    .entryBody{border-top:1px solid var(--line);background:#fafbfa;padding:16px 20px 18px}.entryBody h3{margin:0 0 8px;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+    .said{background:#fff;border:1px solid var(--line);border-left:4px solid #cfe6d8;border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.6;margin-bottom:12px;color:#2b3a45}.said.second{border-left-color:#e2b454}.said small{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-bottom:4px}
+    .fb{font-size:13px;line-height:1.55;color:#4a5a63;background:#fff;border:1px dashed #d8dee2;border-radius:10px;padding:12px 14px}
+    .emptyJ{background:#fff;border:1px dashed #cfd6db;border-radius:16px;padding:44px 20px;text-align:center;margin-top:22px}.emptyJ .ico{font-size:34px}.emptyJ h2{margin:10px 0 6px;font-size:17px}.emptyJ p{margin:0 0 16px;color:var(--muted);font-size:13px}
+    @media(max-width:700px){.stats{grid-template-columns:1fr}.score{width:100%;text-align:left;margin-left:0}}
     .hidden{display:none}.note{font-size:11px;color:var(--muted);margin-top:8px}
     .tasks{display:grid;gap:14px;margin-top:18px}.taskCard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 19px;box-shadow:0 2px 6px #182a3408;display:flex;gap:14px;align-items:center;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}.taskCard:hover{border-color:#b9cbd6}
     .taskIcon{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:#e8f1f8;color:#2b668d;font-size:21px;flex:none}.taskCard h2{margin:0 0 4px;font-size:15px}.taskCard p{margin:0;color:var(--muted);font-size:12px}.taskCard .right{margin-left:auto;text-align:right;flex:none}.taskCard .arrow{color:#a2b0ba;font-size:18px;margin-left:12px}
@@ -54,10 +67,14 @@
       <h1>My oral tasks</h1>
       <p class="subtitle" id="taskCount"></p>
       <div class="tasks" id="taskList"></div>
-      <section class="card" id="journalCard">
-        <div class="heading"><h2>My journal</h2><span class="status">saved on this device only</span></div>
-        <div id="journalList"><p class="desc">No entries yet. Your saved explanations will appear here.</p></div>
-      </section>
+    </section>
+
+    <!-- ================= VIEW 3: JOURNAL ================= -->
+    <section id="viewJournal" class="hidden">
+      <h1>My journal</h1>
+      <p class="subtitle">Everything you have explained, in your own words. Saved on this device only.</p>
+      <div class="stats" id="journalStats"></div>
+      <div class="entries" id="journalList"></div>
     </section>
 
     <!-- ================= VIEW 2: ONE TASK ================= -->
@@ -196,13 +213,13 @@ function renderTaskList() {
   renderJournals();
 }
 function showView(name) {
-  $("viewTasks").classList.toggle("hidden", name !== "tasks"); $("viewTask").classList.toggle("hidden", name !== "task");
-  $("navTasks").classList.toggle("active", name === "tasks"); $("navJournal").classList.toggle("active", false);
+  $("viewTasks").classList.toggle("hidden", name !== "tasks"); $("viewTask").classList.toggle("hidden", name !== "task"); $("viewJournal").classList.toggle("hidden", name !== "journal");
+  $("navTasks").classList.toggle("active", name === "tasks" || name === "task"); $("navJournal").classList.toggle("active", name === "journal");
   window.scrollTo({ top: 0 });
 }
-$("navTasks").onclick = () => { renderTaskList(); showView("tasks"); };
+$("navTasks").onclick = () => { if (recording) rec.stop(); renderTaskList(); showView("tasks"); };
 $("backBtn").onclick = () => { if (recording) rec.stop(); renderTaskList(); showView("tasks"); };
-$("navJournal").onclick = () => { renderTaskList(); showView("tasks"); $("journalCard").scrollIntoView({ behavior: "smooth" }); };
+$("navJournal").onclick = () => { if (recording) rec.stop(); renderJournals(); showView("journal"); };
 
 // ---------- View 2: one task ----------
 function openTask(id) {
@@ -247,7 +264,7 @@ $("analyzeBtn").onclick = async () => {
     if (attempt === 1) {
       const analysis = await analyzeTranscript(text, task.knowledgePoints, null, false);
       dedupe(analysis);
-      attempts.push({ n: 1, transcript: text, analysis, at: new Date().toISOString() });
+      attempts = [{ n: 1, transcript: text, analysis, at: new Date().toISOString() }]; // re-checking attempt 1 replaces it, never stacks
       renderAnalysis(analysis, null);
       focusIds = [...new Set([...analysis.missing.map(m => m.pointId), ...analysis.misconceptions.map(m => m.pointId)])];
       if (focusIds.length) $("againBtn").classList.remove("hidden");
@@ -324,10 +341,34 @@ $("saveBtn").onclick = () => {
   j.unshift({ id: "j-" + Date.now(), taskId: task.id, taskTitle: task.title, question: task.question, studentName: name, createdAt: new Date().toISOString(), attempts });
   localStorage.setItem("oj_journals", JSON.stringify(j)); $("saveBtn").textContent = "Saved ✔"; $("saveBtn").disabled = true;
 };
+function fmtDate(iso) { const d = new Date(iso); return d.toLocaleDateString(undefined, { month: "short", day: "numeric" }) + " · " + d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" }); }
 function renderJournals() {
-  const j = loadJournals(); if (!j.length) { $("journalList").innerHTML = '<p class="desc">No entries yet. Your saved explanations will appear here.</p>'; return; }
-  $("journalList").innerHTML = j.slice(0, 8).map(e => { const t = tasks.find(x => x.id === e.taskId); const n = t ? t.knowledgePoints.length : "?"; const last = e.attempts[e.attempts.length - 1], first = e.attempts[0]; const got = (last.combined || last.analysis).mentioned.length;
-    return `<div class="journal"><span><b>${esc(e.taskTitle || e.question)}</b><small>${esc(e.studentName)} · ${new Date(e.createdAt).toLocaleString()} · ${e.attempts.length} attempt${e.attempts.length > 1 ? "s" : ""} · ${last.analysis.mode === "ai" ? "AI" : "offline"}</small></span><span class="pill ${got === n ? "stable" : "review"}">${first.analysis.mentioned.length}/${n} → ${got}/${n}</span></div>`; }).join("");
+  const j = loadJournals();
+  if (!j.length) {
+    $("journalStats").innerHTML = "";
+    $("journalList").innerHTML = `<div class="emptyJ"><div class="ico">🎙</div><h2>Nothing here yet</h2><p>Finish a task and save it. Your explanations will live here, in your own words.</p><button class="primary" id="emptyGo">Pick a task</button></div>`;
+    $("emptyGo").onclick = () => { renderTaskList(); showView("tasks"); }; return;
+  }
+  let ideasTotal = 0, ideasGot = 0, complete = 0;
+  const cards = j.map(e => {
+    const t = tasks.find(x => x.id === e.taskId); const points = t ? t.knowledgePoints : []; const n = points.length;
+    const first = e.attempts[0], last = e.attempts[e.attempts.length - 1], final = last.combined || last.analysis;
+    const got = final.mentioned.length; ideasTotal += n; ideasGot += got; if (got === n) complete++;
+    const chips = points.map(p => { const st = status(final, p.id); const from = final.mentioned.find(m => m.pointId === p.id)?.from;
+      return st === "mentioned" ? `<span class="chip ok">✔ ${esc(p.name)}${from === 2 ? " <em>· added</em>" : ""}</span>` : st === "misconception" ? `<span class="chip bad">! ${esc(p.name)}</span>` : `<span class="chip warn">○ ${esc(p.name)}</span>`; }).join("");
+    const body = e.attempts.map(a => `<div class="said${a.n === 2 ? " second" : ""}"><small>ATTEMPT ${a.n}${a.n === 2 ? " · filling the gaps" : ""}</small>${esc(a.transcript)}</div>`).join("") + (final.feedback ? `<div class="fb">${esc(final.feedback)}</div>` : "");
+    return `<article class="entry" data-id="${esc(e.id)}">
+      <div class="entryHead"><div class="taskIcon">${esc(t?.icon || "◌")}</div><div><h2>${esc(e.taskTitle || e.question)}</h2><p>${esc(t?.subject || "")}${t?.subject ? " · " : ""}${fmtDate(e.createdAt)} · ${e.attempts.length} attempt${e.attempts.length > 1 ? "s" : ""}</p></div>
+        <div class="score"><div class="big">${got}<span>/ ${n} ideas</span></div><div class="label">${first.analysis.mentioned.length}/${n} on the first try</div></div></div>
+      <div class="bar"><i style="width:${n ? Math.round(got / n * 100) : 0}%"></i></div>
+      <div class="chips">${chips}</div>
+      <div class="entryFoot"><button class="ghost small" data-toggle>Read what I said</button>${t ? `<button class="ghost small" data-retry="${esc(t.id)}">Try again</button>` : ""}<span class="status">${last.analysis.mode === "ai" ? "AI · against teacher's criteria" : "offline keyword check"}</span></div>
+      <div class="entryBody hidden"><h3>In my own words</h3>${body}</div>
+    </article>`; }).join("");
+  $("journalStats").innerHTML = `<div class="stat"><div class="label">Explanations saved</div><div class="num">${j.length}</div></div><div class="stat"><div class="label">Ideas expressed</div><div class="num">${ideasGot}<span>of ${ideasTotal}</span></div></div><div class="stat"><div class="label">Fully covered</div><div class="num">${complete}<span>of ${j.length} tasks</span></div></div>`;
+  $("journalList").innerHTML = cards;
+  document.querySelectorAll("[data-toggle]").forEach(b => b.onclick = () => { const body = b.closest(".entry").querySelector(".entryBody"); const open = body.classList.toggle("hidden"); b.textContent = open ? "Read what I said" : "Hide"; });
+  document.querySelectorAll("[data-retry]").forEach(b => b.onclick = () => openTask(b.dataset.retry));
 }
 
 // ---------- Boot ----------
