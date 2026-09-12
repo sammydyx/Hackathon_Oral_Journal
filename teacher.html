@@ -34,7 +34,7 @@
 </head>
 <body>
   <div class="app">
-    <aside><div class="brand">◉ Oral Journal<span>TEACHER SPACE</span></div><nav><button class="nav active" data-view="dashboard">▦　Class overview</button><button class="nav" id="tasks-nav" data-view="assignments">◫　Oral tasks</button><button class="nav" id="roster-nav" data-view="roster">☷　Student roster</button><button class="nav" id="map-nav" data-view="map">⌁　Understanding map</button></nav><div class="profile">Ms. Lin<br><small>Grade 5 Mathematics</small><small data-session-email></small><button type="button" data-sign-out style="margin-top:8px;border:1px solid #ffffff55;border-radius:6px;background:transparent;color:#fff;padding:5px 8px;font:inherit;font-size:11px;cursor:pointer">Sign out</button></div></aside>
+    <aside><div class="brand">◉ Oral Journal<span>TEACHER SPACE</span></div><nav><button class="nav active" data-view="dashboard">▦　Class overview</button><button class="nav" id="tasks-nav" data-view="assignments">◫　Oral tasks</button><button class="nav" id="submissions-nav" data-view="submissions">▤　Student submissions</button><button class="nav" id="roster-nav" data-view="roster">☷　Student roster</button><button class="nav" id="map-nav" data-view="map">⌁　Understanding map</button></nav><div class="profile">Ms. Lin<br><small>Grade 5 Mathematics</small><small data-session-email></small><button type="button" data-sign-out style="margin-top:8px;border:1px solid #ffffff55;border-radius:6px;background:transparent;color:#fff;padding:5px 8px;font:inherit;font-size:11px;cursor:pointer">Sign out</button></div></aside>
     <main>
       <section id="dashboard-view"><div class="top"><div><h1>Class understanding overview</h1><p class="subtitle">Grade 5 Mathematics · Hear students explain first, then decide what to teach next.</p></div><button class="primary" id="create">＋ Create oral task</button></div>
       <section class="summary">
@@ -99,7 +99,7 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
     ];
     let selectedStudent=roster[0]; let selectedTask=taskTemplates[0];
     function showView(view){
-      const views={dashboard:dashboardView,roster:rosterView,journals:journalsView,student:studentView,task:taskView,assignments:assignmentsView,'assignment-detail':assignmentDetailView,'create-task':createTaskView,map:mapView};
+      const views={submissions:document.querySelector('#submissions-view'),dashboard:dashboardView,roster:rosterView,journals:journalsView,student:studentView,task:taskView,assignments:assignmentsView,'assignment-detail':assignmentDetailView,'create-task':createTaskView,map:mapView};
       Object.entries(views).forEach(([name,element])=>element.hidden=name!==view);
       document.querySelectorAll('.nav[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===view || (['student','task','assignment-detail','create-task'].includes(view)&&button.dataset.view==='assignments')));
       if(view==='roster'){renderRoster(rosterSearch.value);rosterSearch.focus();}
@@ -142,6 +142,7 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
       taskView.querySelector('#teacher-note').onclick=()=>alert('Teacher note field will be available when journal data is connected.');
     }
     document.querySelector('[data-view="dashboard"]').onclick=()=>showView('dashboard');
+    document.querySelector('#submissions-nav').onclick=()=>showView('submissions');
     document.querySelector('#tasks-nav').onclick=()=>showView('assignments');
     document.querySelector('#map-nav').onclick=()=>showView('map');
     document.querySelector('#assignment-create').onclick=()=>openCreateTask();
@@ -256,7 +257,7 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
         try {
           const response=await fetch('/api/tasks',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:values.question,knowledgePoints:values.criteria})});
           const data=await response.json();if(!response.ok)throw new Error(data.error||'Could not publish task.');
-          publishedTask=data.task;await loadPublishedTasks();
+          publishedTask=data.task;
         }catch(error){alert(error.message||'Could not publish. Please retry.');return;}
         finally{button.disabled=false;}
       }
