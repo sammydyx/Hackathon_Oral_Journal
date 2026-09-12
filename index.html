@@ -19,12 +19,19 @@
     .map-detail[open]{border-color:var(--line);background:#fbfcfc}
     .map-detail[open] summary{border-bottom:1px solid var(--line)}
     .map-detail .overview-students{margin:10px}
-    @media(max-width:900px){.map-detail summary{padding:10px 0}.heatmap-head,.heatmap-row{grid-template-columns:1fr}.heatmap-total{grid-template-columns:repeat(2,max-content);gap:10px}.heatmap-countline{grid-template-columns:22px 1fr}}
+    .task-spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+    .task-spec-grid h2{margin:0 0 10px;font-size:16px}
+    .task-spec-grid ul{margin:0;padding-left:18px;font-size:13px;line-height:1.8}
+    .task-performance{margin-top:24px}
+    .task-performance h2{font-size:19px;margin:0 0 5px}
+    .performance-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+    .performance-summary .card{padding:14px}
+    @media(max-width:900px){.map-detail summary{padding:10px 0}.heatmap-head,.heatmap-row{grid-template-columns:1fr}.heatmap-total{grid-template-columns:repeat(2,max-content);gap:10px}.heatmap-countline{grid-template-columns:22px 1fr}.task-spec-grid,.performance-summary{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <div class="app">
-    <aside><div class="brand">◉ Oral Journal<span>TEACHER SPACE</span></div><nav><button class="nav active" data-view="dashboard">▦　Class overview</button><button class="nav" id="assignments-nav" data-view="assignments">◫　My assignments</button><button class="nav" id="journals-nav" data-view="journals">◌　Student journals</button><button class="nav" id="roster-nav" data-view="roster">☷　Student roster</button><button class="nav" id="map-nav" data-view="map">⌁　Understanding map</button></nav><div class="profile">Ms. Lin<br><small>Grade 5 Mathematics</small></div></aside>
+    <aside><div class="brand">◉ Oral Journal<span>TEACHER SPACE</span></div><nav><button class="nav active" data-view="dashboard">▦　Class overview</button><button class="nav" id="tasks-nav" data-view="assignments">◫　Oral tasks</button><button class="nav" id="roster-nav" data-view="roster">☷　Student roster</button><button class="nav" id="map-nav" data-view="map">⌁　Understanding map</button></nav><div class="profile">Ms. Lin<br><small>Grade 5 Mathematics</small></div></aside>
     <main>
       <section id="dashboard-view"><div class="top"><div><h1>Class understanding overview</h1><p class="subtitle">Grade 5 Mathematics · Hear students explain first, then decide what to teach next.</p></div><button class="primary" id="create">＋ Create oral task</button></div>
       <section class="summary">
@@ -43,7 +50,8 @@
       <section id="journals-view" hidden><div class="top"><div><h1>Student Journal Review</h1><p class="subtitle">Choose an oral task first, then filter and review the students who completed it.</p></div></div><div class="roster-toolbar"><div style="display:flex;gap:10px;flex-wrap:wrap"><select class="roster-search" id="task-filter" aria-label="Filter by oral task" style="width:230px"><option value="">Select an oral task</option></select><select class="roster-search" id="status-filter" aria-label="Filter by journal status" style="width:180px"><option value="all">All statuses</option><option value="On track">On track</option><option value="Needs follow-up">Needs follow-up</option></select></div><input class="roster-search" id="journals-search" type="search" placeholder="Search by name or student ID" aria-label="Search student journals" /></div><p class="desc" id="journals-count">Select an oral task to view students.</p><article class="card"><table><thead><tr><th>Student</th><th>Selected oral task</th><th>Status</th><th></th></tr></thead><tbody id="journals-body"></tbody></table></article></section>
       <section id="student-view" hidden></section>
       <section id="task-view" hidden></section>
-      <section id="assignments-view" hidden><div class="top"><div><h1>My assignments</h1><p class="subtitle">Create and monitor oral tasks for Grade 5 Mathematics.</p></div><button class="primary" id="assignment-create">＋ Create oral task</button></div><div class="assignment-grid"><article class="card assignment-card"><span class="tag">Active · Due tomorrow</span><h2>Comparing fractions</h2><p>Why is 3/4 greater than 2/3?</p><p><b>30</b> responses · <b>14</b> students need follow-up</p><button class="outline" data-assignment-task="fractions">Review class results →</button></article><article class="card assignment-card"><span class="tag">Completed · Sep 10</span><h2>Place value</h2><p>Explain why the same digit can have different values.</p><p><b>30</b> responses · <b>24</b> students on track</p><button class="outline" data-assignment-task="place-value">Review class results →</button></article><article class="card assignment-card"><span class="pill review">Draft</span><h2>Multiplication word problems</h2><p>How do you decide whether multiplication is the right operation?</p><p>No student responses yet.</p><button class="outline" data-assignment-task="word-problems">Review class results →</button></article></div></section>
+      <section id="assignments-view" hidden><div class="top"><div><h1>Oral tasks</h1><p class="subtitle">Choose a teacher-created task to review its expectations and student performance.</p></div><button class="primary" id="assignment-create">＋ Create oral task</button></div><div class="assignment-grid"><article class="card assignment-card"><span class="tag">Active · Due tomorrow</span><h2>Comparing fractions</h2><p>Why is 3/4 greater than 2/3?</p><p><b>30</b> responses · <b>14</b> students need follow-up</p><button class="outline" data-assignment-task="fractions">View task →</button></article><article class="card assignment-card"><span class="tag">Completed · Sep 10</span><h2>Place value</h2><p>Explain why the same digit can have different values.</p><p><b>30</b> responses · <b>24</b> students on track</p><button class="outline" data-assignment-task="place-value">View task →</button></article><article class="card assignment-card"><span class="pill review">Draft</span><h2>Multiplication word problems</h2><p>How do you decide whether multiplication is the right operation?</p><p>No student responses yet.</p><button class="outline" data-assignment-task="word-problems">View task →</button></article></div></section>
+      <section id="assignment-detail-view" hidden></section>
       <section id="map-view" hidden><div class="top"><div><h1>Understanding map</h1><p class="subtitle">See how on track each knowledge point is for the selected oral task.</p></div><select class="roster-search" id="map-task" aria-label="Select a task for the understanding map" style="width:250px"></select></div><article class="card heatmap-card"><div class="heatmap-head"><span>Knowledge point</span><span>Class understanding distribution</span><span>Students</span></div><div class="heatmap-list" id="heatmap-list"></div><div class="legend"><span><i style="background:#bfe8d4"></i> On track</span><span><i style="background:#fae8e7"></i> Needs strengthening</span></div><div class="heatmap-insight" id="heatmap-insight"></div></article></section>
     </main>
   </div>
@@ -66,6 +74,7 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
     const studentView=document.querySelector('#student-view');
     const taskView=document.querySelector('#task-view');
     const assignmentsView=document.querySelector('#assignments-view');
+    const assignmentDetailView=document.querySelector('#assignment-detail-view');
     const mapView=document.querySelector('#map-view');
     const rosterBody=document.querySelector('#roster-body');
     const rosterSearch=document.querySelector('#roster-search');
@@ -83,9 +92,9 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
     ];
     let selectedStudent=roster[0]; let selectedTask=taskTemplates[0];
     function showView(view){
-      const views={dashboard:dashboardView,roster:rosterView,journals:journalsView,student:studentView,task:taskView,assignments:assignmentsView,map:mapView};
+      const views={dashboard:dashboardView,roster:rosterView,journals:journalsView,student:studentView,task:taskView,assignments:assignmentsView,'assignment-detail':assignmentDetailView,map:mapView};
       Object.entries(views).forEach(([name,element])=>element.hidden=name!==view);
-      document.querySelectorAll('.nav[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===view || (['student','task'].includes(view)&&button.dataset.view==='journals')));
+      document.querySelectorAll('.nav[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===view || (['student','task','assignment-detail'].includes(view)&&button.dataset.view==='assignments')));
       if(view==='roster'){renderRoster(rosterSearch.value);rosterSearch.focus();}
       if(view==='journals'){renderJournals(journalsSearch.value);taskFilter.focus();}
     }
@@ -125,12 +134,11 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
       taskView.querySelector('#request-more').onclick=()=>alert(`A follow-up oral task has been prepared for ${student.name}.`);
       taskView.querySelector('#teacher-note').onclick=()=>alert('Teacher note field will be available when journal data is connected.');
     }
-    document.querySelector('#journals-nav').onclick=()=>showView('journals');
     document.querySelector('[data-view="dashboard"]').onclick=()=>showView('dashboard');
-    document.querySelector('#assignments-nav').onclick=()=>showView('assignments');
+    document.querySelector('#tasks-nav').onclick=()=>showView('assignments');
     document.querySelector('#map-nav').onclick=()=>showView('map');
     document.querySelector('#assignment-create').onclick=()=>modal.classList.add('open');
-    document.querySelectorAll('[data-assignment-task]').forEach(button=>button.onclick=()=>{taskFilter.value=button.dataset.assignmentTask;statusFilter.value='all';journalsSearch.value='';renderJournals();showView('journals');});
+    document.querySelectorAll('[data-assignment-task]').forEach(button=>button.onclick=()=>{const task=taskTemplates.find(item=>item.id===button.dataset.assignmentTask);renderAssignmentDetail(task);showView('assignment-detail');});
     const mapTask=document.querySelector('#map-task');
     const heatmapList=document.querySelector('#heatmap-list');
     const heatmapInsight=document.querySelector('#heatmap-insight');
@@ -176,6 +184,25 @@ Conclusion and reasoning</textarea></label><div class="actions"><button class="c
       heatmapList.innerHTML=rows.map(([label,onTrack,strengthen],index)=>{const onTrackStudents=studentsForMap(mapTask.value,index,onTrack,'ontrack');const strengthenStudents=studentsForMap(mapTask.value,index,onTrack,'strengthen');return `<details class="map-detail"><summary class="heatmap-row"><div class="heatmap-label">${label}</div><div class="heatmap-bar" aria-label="${label}: ${onTrack} on track, ${strengthen} need strengthening"><span class="heatmap-segment heatmap-ontrack" style="flex:${onTrack}">${onTrack}</span><span class="heatmap-segment heatmap-strengthen" style="flex:${strengthen}">${strengthen}</span></div><div class="heatmap-total"><span class="heatmap-countline"><b>${onTrack}</b><span>On track</span></span><span class="heatmap-countline"><b>${strengthen}</b><span>To strengthen</span></span></div></summary><div class="overview-students"><div class="student-group ontrack"><h3>On track · ${onTrackStudents.length} students</h3>${studentChips(onTrackStudents,'ontrack')}</div><div class="student-group strengthen"><h3>Needs strengthening · ${strengthenStudents.length} students</h3>${studentChips(strengthenStudents,'strengthen')}</div></div></details>`}).join('');
       const priority=rows.reduce((largest,row)=>row[2]>largest[2]?row:largest,rows[0]);
       heatmapInsight.innerHTML=`<b>Teaching focus: ${priority[0]}</b> — ${priority[2]} of 30 students need more support. Most common misconception: “${priority[3]}.”`;
+    }
+    const taskSpecifications={
+      fractions:{criteria:['Explain that both fractions refer to the same whole.','Explain the meaning of numerator and denominator.','Find a common denominator before comparing.','Give a conclusion and explain why.'],misconceptions:['Comparing the numerators only.','Thinking a larger denominator means a larger fraction.']},
+      'place-value':{criteria:['Name the value of a digit from its place.','Compare the same digit in two different numbers.','Use expanded form when helpful.','Explain the relationship in words.'],misconceptions:['Treating a digit as having one fixed value.','Leaving out zero placeholders.']},
+      'word-problems':{criteria:['Identify the quantities in the problem.','Choose an operation using the relationship, not keywords alone.','Write an equation that matches the story.','Explain why the solution makes sense.'],misconceptions:['Choosing multiplication only because a keyword appears.','Giving an answer without naming the quantities.']}
+    };
+    function renderAssignmentDetail(task){
+      const specification=taskSpecifications[task.id];
+      const rows=understandingData[task.id];
+      const needing=Math.max(...rows.map(row=>row[2]));
+      assignmentDetailView.innerHTML=`<div class="top"><div><button class="outline" id="back-to-tasks">← All oral tasks</button><h1 style="margin-top:18px">${task.title}</h1><p class="subtitle">${task.question}</p></div><span class="tag">${task.status} · ${task.date}</span></div><div class="task-spec-grid"><article class="card"><h2>Teacher task details</h2><p class="desc">30 of 30 students have submitted an oral journal.</p><div class="label">Success criteria</div><ul>${specification.criteria.map(item=>`<li>${item}</li>`).join('')}</ul></article><article class="card"><h2>What to listen for</h2><p class="desc">AI organizes evidence against these teacher-defined misconceptions.</p><div class="label">Common misconceptions</div><ul>${specification.misconceptions.map(item=>`<li>${item}</li>`).join('')}</ul></article></div><section class="task-performance"><h2>Student performance</h2><p class="desc">Start with the class pattern, then open an individual oral journal when needed.</p><div class="performance-summary"><article class="card"><div class="label">On track</div><div class="num">${30-needing} <span class="note">students</span></div></article><article class="card"><div class="label">Needs strengthening</div><div class="num">${needing} <span class="note">students</span></div></article><article class="card"><div class="label">Knowledge points</div><div class="num">${rows.length}</div></article></div><article class="card"><div class="heatmap-head"><span>Knowledge point</span><span>Understanding</span><span>Students</span></div><div class="heatmap-list">${rows.map(([label,onTrack,strengthen])=>`<div class="heatmap-row"><div class="heatmap-label">${label}</div><div class="heatmap-bar"><span class="heatmap-segment heatmap-ontrack" style="flex:${onTrack}">${onTrack}</span><span class="heatmap-segment heatmap-strengthen" style="flex:${strengthen}">${strengthen}</span></div><div class="heatmap-total"><span class="heatmap-countline"><b>${onTrack}</b><span>On track</span></span><span class="heatmap-countline"><b>${strengthen}</b><span>To strengthen</span></span></div></div>`).join('')}</div></article><div class="roster-toolbar"><div style="display:flex;gap:10px"><select class="roster-search" id="task-student-status" style="width:190px"><option value="all">All student statuses</option><option value="On track">On track</option><option value="Needs follow-up">Needs follow-up</option></select></div><input class="roster-search" id="task-student-search" placeholder="Search students" /></div><article class="card"><table><thead><tr><th>Student</th><th>Latest oral journal</th><th>Status</th><th></th></tr></thead><tbody id="task-students-body"></tbody></table></article></section>`;
+      const statusSelect=assignmentDetailView.querySelector('#task-student-status');
+      const searchInput=assignmentDetailView.querySelector('#task-student-search');
+      const studentBody=assignmentDetailView.querySelector('#task-students-body');
+      function renderTaskStudents(){const query=searchInput.value.toLowerCase();const visible=roster.filter(student=>`${student.name} ${student.id}`.toLowerCase().includes(query)&&(statusSelect.value==='all'||journalStatus(student,task.id)===statusSelect.value));studentBody.innerHTML=visible.map(student=>{const status=journalStatus(student,task.id);return `<tr><td><span class="roster-name"><span class="roster-table-avatar" style="background:${student.color}">${student.initials}</span>${student.name}</span></td><td>Attempt 2 · ${task.date}</td><td><span class="status ${status==='On track'?'good':'warn'}">${status}</span></td><td><button class="outline" data-review-student="${student.id}">Review journal →</button></td></tr>`}).join('')||'<tr><td colspan="4" class="roster-note">No students match these filters.</td></tr>';}
+      assignmentDetailView.querySelector('#back-to-tasks').onclick=()=>showView('assignments');
+      statusSelect.onchange=renderTaskStudents; searchInput.oninput=renderTaskStudents;
+      studentBody.onclick=event=>{const button=event.target.closest('[data-review-student]');if(button){const student=roster.find(item=>item.id===button.dataset.reviewStudent);renderTask(student,task);showView('task');}};
+      renderTaskStudents();
     }
     mapTask.onchange=renderUnderstandingMap;
     document.querySelector('#overview-map-link').onclick=()=>{mapTask.value='fractions';renderUnderstandingMap();showView('map');};
